@@ -30,6 +30,11 @@ namespace ObligatorioP2
             return instancia;
         }
 
+        public List<Servicio> GetServiciosPorClienteEntreFechas(int? idLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Cliente> GetClientesOrdenados() //métod que retorna una lista de clientes ordenados por un criterio.
         {
             List<Cliente> clientesOrdenados = new List<Cliente>(); //creamos variable de tipo lista para los clientes ordenados.
@@ -98,7 +103,7 @@ namespace ObligatorioP2
         {
             return platos;
         }
-        public List<Plato> GetPlatosOrdenadosPorNombre(int? id) 
+        public List<Plato> GetPlatosOrdenadosPorNombre(int? id)
         {
             platos.Sort();
             return platos;
@@ -108,7 +113,6 @@ namespace ObligatorioP2
             platos.Sort();
             return platos;
         }
-
         public Repartidor GetRepartidorPorId(int num) 
         {
             Repartidor ret = null; 
@@ -123,6 +127,17 @@ namespace ObligatorioP2
             }
 
             return ret;
+        }
+        public void Likear(int id)
+        {
+            foreach (Plato p in platos)
+            {
+
+                if (p.Id.Equals(id))
+                {
+                    p.Likes++;
+                }
+            }
         }
 
 
@@ -149,8 +164,7 @@ namespace ObligatorioP2
 
             return ret;
         }
-
-        public List<Servicio> GetServiciosPorClienteEntreFechas(int ? id, DateTime fecha1, DateTime fecha2)
+        public List<Servicio> GetServiciosPorClienteEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
         {
             List<Servicio> ret = new List<Servicio>();
             foreach (Servicio s in servicios)
@@ -165,6 +179,8 @@ namespace ObligatorioP2
             }
             return ret;
         }
+
+
 
         //public bool ModificarPrecioMinimoPlato(double precioNuevo) 
         //{
@@ -284,17 +300,6 @@ namespace ObligatorioP2
             }
 
             return numExiste;
-        }
-
-        public void Likear (int id)
-        {
-            foreach(Plato p in platos)
-            {
-                if (p.Id.Equals(id))
-                {
-                    p.Likes++;
-                }
-            }
         }
 
 

@@ -17,6 +17,8 @@ namespace ObligatorioP2
 
         public DateTime Fecha { get; set; }
 
+        public double PrecioFinal { get; set; } = 0;
+        public bool Estado { get; set; } //darle true al darle alta 
 
 
         public Servicio()
@@ -29,6 +31,8 @@ namespace ObligatorioP2
             UltimoId++;
             Cliente = cliente;
             Fecha = fecha;
+            PrecioFinal = CalcularPrecio();
+            Estado = false;
         }
 
 
@@ -43,6 +47,7 @@ namespace ObligatorioP2
             {
                 sumaMontos += pc.Plato.Precio * pc.Cantidad; //calculamos el precio total (sumamos todos los platos).
             }
+            this.PrecioFinal = sumaMontos;
             return sumaMontos;
         }
 

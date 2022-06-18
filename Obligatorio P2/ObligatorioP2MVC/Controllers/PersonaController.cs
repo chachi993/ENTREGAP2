@@ -19,7 +19,7 @@ namespace ObligatorioP2MVC.Controllers
         {
             return View();
         }
-
+        
         [HttpPost]
         public IActionResult AltaCliente(Cliente c, string user, string pass )
         {
