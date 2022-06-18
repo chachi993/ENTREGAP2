@@ -94,8 +94,18 @@ namespace ObligatorioP2
         }
 
         //retornamos la lista de platos.
-        public List<Plato> GetPlatos() 
+        public List<Plato> GetPlatos()
         {
+            return platos;
+        }
+        public List<Plato> GetPlatosOrdenadosPorNombre(int? id) 
+        {
+            platos.Sort();
+            return platos;
+        }
+        public List<Plato> GetPlatosOrdenadosPorNombre()
+        {
+            platos.Sort();
             return platos;
         }
 
@@ -260,6 +270,17 @@ namespace ObligatorioP2
             }
 
             return numExiste;
+        }
+
+        public void Likear (int id)
+        {
+            foreach(Plato p in platos)
+            {
+                if (p.Id.Equals(id))
+                {
+                    p.Likes++;
+                }
+            }
         }
 
 

@@ -4,7 +4,7 @@ namespace ObligatorioP2
     public class Mozo : Persona // la clase Mozo hereda instancias y métodos de su clase padre (Persona).
     {
 
-        // CCCcreamos las instancias unicas de las clase Mozo
+        //creamos las instancias unicas de las clase Mozo
         public int NumeroFuncionario { get; set; }
 
 

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+
 namespace ObligatorioP2
 {
-    public class Plato: IValidacion
+    public class Plato : IValidacion, IComparable<Plato>
     {
         public int Id { get; set; }
 
@@ -12,6 +14,8 @@ namespace ObligatorioP2
         public double Precio { get; set; }
 
         public static double PrecioMinimo { get; set; } = 100;
+        public int Likes { get; set; }
+
 
 
         public Plato()
@@ -24,9 +28,10 @@ namespace ObligatorioP2
             UltimoId++;
             Nombre = nombre;
             Precio = precio;
+            Likes = 0;
         }
 
-        
+
 
         public bool EsValido()
         {
@@ -53,7 +58,7 @@ namespace ObligatorioP2
                 precioEsValido = true;
             }
 
-            if(precioEsValido && nombreEsValido)
+            if (precioEsValido && nombreEsValido)
             {
                 esValido = true;
             }
@@ -75,7 +80,26 @@ namespace ObligatorioP2
             return $"{Nombre}: {Precio}.   ";
         }
 
+        public virtual int CompareTo([AllowNull] Plato other)
+        {
+            if (Nombre.CompareTo(other.Nombre) > 0)
+            {
+                return 1;
+            }
+            else if (Nombre.CompareTo(other.Nombre) < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        
     }
 
+
 }
+
+
 
