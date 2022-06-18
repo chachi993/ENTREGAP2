@@ -179,6 +179,20 @@ namespace ObligatorioP2
             }
             return ret;
         }
+        public List<Servicio> GetServiciosPorCliente(int? id)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Servicio s in servicios)
+            {
+                if (id == s.Cliente.Id)
+                {
+                   
+                    ret.Add(s);
+                    
+                }
+            }
+            return ret;
+        }
 
 
 

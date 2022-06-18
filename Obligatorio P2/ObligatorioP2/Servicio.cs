@@ -19,6 +19,7 @@ namespace ObligatorioP2
 
         public double PrecioFinal { get; set; } = 0;
         public bool Estado { get; set; } //darle true al darle alta 
+        public string ListaPlatos { get; set; }
 
 
         public Servicio()
@@ -33,6 +34,7 @@ namespace ObligatorioP2
             Fecha = fecha;
             PrecioFinal = CalcularPrecio();
             Estado = false;
+            ListaPlatos = ListarPlatos();
         }
 
 
@@ -47,10 +49,18 @@ namespace ObligatorioP2
             {
                 sumaMontos += pc.Plato.Precio * pc.Cantidad; //calculamos el precio total (sumamos todos los platos).
             }
-            this.PrecioFinal = sumaMontos;
+            PrecioFinal = sumaMontos;
             return sumaMontos;
         }
-
+        public string ListarPlatos()
+        {
+            string ret = "";
+            foreach(PlatoCantidad pc in platos)
+            {
+                ret += $"Plato: {pc.Plato.Nombre} , cantidad:  {pc.Cantidad}.  ";
+            }
+            return ret;
+        }
         
 
     }

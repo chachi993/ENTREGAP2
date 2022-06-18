@@ -10,12 +10,12 @@
         <form method="post">
             <div class="form-group">
                 <label class="control-label"> Fecha 1</label>
-                <input type="date" name="fecha1" class="form-control" />
+                <input type="date" name="f1" class="form-control" />
             </div>
 
             <div class="form-group">
                 <label class="control-label"> Fecha 2</label>
-                <input type="date" name="fecha2" class="form-control" />
+                <input type="date" name="f2" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Mostrar Servicios" class="btn btn-primary" />
@@ -39,30 +39,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListaPlatos)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioFinal)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListarPlatos)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

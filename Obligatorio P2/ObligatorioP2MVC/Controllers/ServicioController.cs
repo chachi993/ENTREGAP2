@@ -18,7 +18,17 @@ namespace ObligatorioP2MVC.Controllers
 
         public IActionResult MisServicios()
         {
-            return View();
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> misServicios = s.GetServiciosPorCliente(idLogueado);
+                return View(misServicios);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
