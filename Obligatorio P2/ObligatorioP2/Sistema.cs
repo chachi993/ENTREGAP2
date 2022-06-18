@@ -150,7 +150,21 @@ namespace ObligatorioP2
             return ret;
         }
 
-
+        public List<Servicio> GetServiciosPorClienteEntreFechas(int ? id, DateTime fecha1, DateTime fecha2)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Servicio s in servicios)
+            {
+                if (id == s.Cliente.Id)
+                {
+                    if (s.Fecha >= fecha1 && s.Fecha <= fecha2)
+                    {
+                        ret.Add(s);
+                    }
+                }
+            }
+            return ret;
+        }
 
         //public bool ModificarPrecioMinimoPlato(double precioNuevo) 
         //{
