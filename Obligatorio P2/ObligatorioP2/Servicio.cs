@@ -18,7 +18,9 @@ namespace ObligatorioP2
         public DateTime Fecha { get; set; }
 
         public double PrecioFinal { get; set; } = 0;
-        public bool Estado { get; set; } //darle true al darle alta 
+
+        public bool Estado { get; set; } //darle true al darle alta
+
         public string ListaPlatos { get; set; }
 
 

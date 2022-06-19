@@ -25,7 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Plato" asp-action="Biblioteca">Lista de Platos</a>
                         </li>
-                        @if (Context.Session.GetString("LogueadoId") == null)
+                        @if (Context.Session.GetInt32("LogueadoId") == null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Ingresar</a>
@@ -36,6 +36,12 @@
                                 }
                                 else
                                 {
+                                    if (Context.Session.GetString("LogueadoRol") == "Cliente")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="MisServicios">Mis servicios</a>
+                                        </li>
+                                    }
                                    <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar Sesión</a>
                             </li>
