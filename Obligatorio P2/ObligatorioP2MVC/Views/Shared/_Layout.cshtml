@@ -33,19 +33,22 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Persona" asp-action="AltaCliente">Registrarse</a>
                             </li>
-                                }
-                                else
-                                {
-                                    if (Context.Session.GetString("LogueadoRol") == "Cliente")
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="MisServicios">Mis servicios</a>
-                                        </li>
-                                    }
-                                   <li class="nav-item">
+                        }
+                        else
+                        {
+                            if (Context.Session.GetString("LogueadoRol") == "Cliente")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="MisServicios">Mis servicios</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="AltaDelivery">Agregar Delivery</a>
+                                </li>
+                            }
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar Sesión</a>
                             </li>
-            }
+                        }
                     </ul>
                 </div>
             </div>

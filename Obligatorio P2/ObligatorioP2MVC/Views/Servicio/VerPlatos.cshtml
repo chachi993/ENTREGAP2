@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ObligatorioP2.PlatoCantidad>
+
+@{ViewData["Title"] = "VerPlatos";
+}
+
+<h1>Platos del servicio</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plato.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plato.Precio)
+            </th>
+            <th>
+                
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plato.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plato.Precio)
+                </td>
+                
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

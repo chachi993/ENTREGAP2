@@ -13,7 +13,7 @@ namespace ObligatorioP2
 
         public Cliente Cliente { get; set; }
 
-        private List<PlatoCantidad> platos = new List<PlatoCantidad>();
+        public List<PlatoCantidad> Platos = new List<PlatoCantidad>();
 
         public DateTime Fecha { get; set; }
 
@@ -21,7 +21,6 @@ namespace ObligatorioP2
 
         public string Estado { get; set; } //darle true al darle alta
 
-        public string ListaPlatos { get; set; }
 
 
         public Servicio()
@@ -36,7 +35,6 @@ namespace ObligatorioP2
             Cliente = cliente;
             Fecha = fecha;
             Estado = "Abierto";
-            ListaPlatos = ListarPlatos();
         }
         
 
@@ -46,7 +44,7 @@ namespace ObligatorioP2
         {
             double sumaMontos = 0;
 
-            foreach (PlatoCantidad pc in platos) //para cada plato de la lista que contiene la cantidad de los distintos plato, me quedo con su precio y la cantidad.
+            foreach (PlatoCantidad pc in Platos) //para cada plato de la lista que contiene la cantidad de los distintos plato, me quedo con su precio y la cantidad.
                                                  
 
             {
@@ -55,15 +53,7 @@ namespace ObligatorioP2
             PrecioFinal = sumaMontos;
             return sumaMontos;
         }
-        public string ListarPlatos()
-        {
-            string ret = "";
-            foreach(PlatoCantidad pc in platos)
-            {
-                ret += $"Plato: {pc.Plato.Nombre} , cantidad:  {pc.Cantidad}.  ";
-            }
-            return ret;
-        }
+        
 
 
         public void CambiarEstado()
@@ -78,6 +68,11 @@ namespace ObligatorioP2
 
             }
         }
+        public void AgregarPlato(PlatoCantidad pc)
+        {
+            Platos.Add(pc);
+        }
+
 
     }
 }

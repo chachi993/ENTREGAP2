@@ -1,0 +1,24 @@
+﻿<h1>Agregar Plato a Servicio de @ViewBag.Servicio.Fecha </h1>
+
+<form method="post">
+
+
+    <input type="text" name="id" value="@ViewBag.Servicio.Id" readonly>
+
+    <select name="slcPlato">
+        @foreach (var p in ViewBag.Platos)
+        {
+            <option value="@p.Id">@p.Nombre</option>
+
+        }
+
+
+    </select>
+    <div class="form-group">
+        <label class="control-label"> Cantidad </label>
+        <input type="number" name="cantidad" class="form-control" />
+    </div>
+
+    <input type="submit" value="Agregar">
+
+</form>

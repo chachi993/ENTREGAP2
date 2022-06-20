@@ -40,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ListaPlatos)
+               
             </th>
         </tr>
     </thead>
@@ -62,7 +62,11 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ListaPlatos)
+                    @Html.ActionLink("Ver platos", "VerPlatos", new { id = item.Id }) |
+                    @if (item.Estado == "Abierto")
+                    {
+                    @Html.ActionLink("Agregar plato", "AgregarPlato", new { id = item.Id });
+                    }
                 </td>
             </tr>
         }

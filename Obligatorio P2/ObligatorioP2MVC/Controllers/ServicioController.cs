@@ -11,6 +11,8 @@ namespace ObligatorioP2MVC.Controllers
     public class ServicioController : Controller
     {
         Sistema s = Sistema.GetInstancia();
+        private bool lp;
+
         public IActionResult Index()
         {
             return View();
@@ -92,6 +94,57 @@ namespace ObligatorioP2MVC.Controllers
             }
 
         }
+
+        public IActionResult AgregarPlato(int Id)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                Servicio ser = s.GetServicioPorId(Id);
+                List <Plato> lp = s.GetPlatos();
+
+                ViewBag.Servicio = ser;
+                ViewBag.Platos = lp;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult AgregarPlato(int id, int cantidad, int slcPlato)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+
+                s.AgregarPlato(id, slcPlato, cantidad );
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        public IActionResult VerPlatos(int Id)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+
+                List<PlatoCantidad> misPlatos = s.GetPlatosCantidadPrServicio(Id);
+                return View(misPlatos);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+       
 
 
     }

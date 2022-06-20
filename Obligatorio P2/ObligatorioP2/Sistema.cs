@@ -97,6 +97,20 @@ namespace ObligatorioP2
             
             return null;
         }
+
+        public Servicio GetServicioPorId(int id)
+        {
+            foreach (Servicio s in servicios)
+            {
+                if (s.Id.Equals(id))
+                {
+                    return s;
+                }
+            }
+
+            return null;
+        }
+
         public Cliente GetCliente(int? idCliente)
         {
             foreach (Persona p in personas)
@@ -125,6 +139,13 @@ namespace ObligatorioP2
                     }
                 }
             }
+        }
+
+        public List<PlatoCantidad> GetPlatosCantidadPrServicio(int id)
+        {
+            Servicio s = GetServicioPorId(id);
+            List<PlatoCantidad> pc = s.Platos;
+            return pc;
         }
 
         public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
@@ -366,115 +387,178 @@ namespace ObligatorioP2
             return numExiste;
         }
 
+        public bool AgregarPlato(int? idServicio, int? idPlato, int cantidad)
+        {
+            if (idPlato != null && idServicio!=null && cantidad > 0){
 
-            private void PreCarga()
+                Plato p = GetPlatosOrdenadosPorNombreId(idPlato);
+                PlatoCantidad pc = new PlatoCantidad(p, cantidad);
+                Servicio s = GetServicioPorId(idServicio);
+                s.AgregarPlato(pc);
+                return true;
+            } else
             {
+                return false;
+            }
+
+        }
+
+        private Servicio GetServicioPorId(int? idServicio)
+        {
+            foreach (Servicio s in servicios)
+
+            {
+                if (s.Id.Equals(idServicio))
+                {
+                    return s;
+                }
+            }
+            return null;
+        }
+
+        private Plato GetPlatosOrdenadosPorNombreId(int? idPlato)
+        {
+            foreach (Plato p in platos)
+               
+            {
+                if (p.Id.Equals(idPlato))
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+        private void PreCarga()
+        {
                 
-                Cliente c1 = new Cliente("Juan", "Gonzalez", "juan19@gmail.com", "Juan3456");
-                AltaCliente(c1,"Juan1","Juan1"); //llamamos al métod AltaCliente para validr y agregar los clientes al sistema.
+            Cliente c1 = new Cliente("Juan", "Gonzalez", "juan19@gmail.com", "Juan3456");
+            AltaCliente(c1,"Juan1","Juan1"); //llamamos al métod AltaCliente para validr y agregar los clientes al sistema.
 
-                Cliente c2 = new Cliente("Romina", "Lopez", "romina19@gmail.com", "Romina3456");
-                AltaCliente(c2);
+            Cliente c2 = new Cliente("Romina", "Lopez", "romina19@gmail.com", "Romina3456");
+            AltaCliente(c2);
 
-                Cliente c3 = new Cliente("Claudia", "Pereira", "claudia19@gmail.com", "Claudia3456");
-                AltaCliente(c3);
+            Cliente c3 = new Cliente("Claudia", "Pereira", "claudia19@gmail.com", "Claudia3456");
+            AltaCliente(c3);
 
-                Cliente c4 = new Cliente("Facundo", "Moreira", "facundo19@gmail.com", "Facundo3456");
-                AltaCliente(c4);
+            Cliente c4 = new Cliente("Facundo", "Moreira", "facundo19@gmail.com", "Facundo3456");
+            AltaCliente(c4);
 
-                Cliente c5 = new Cliente("Florencia", "Martinez", "florencia19@gmail.com", "Florencia3456");
-                AltaCliente(c5);
+            Cliente c5 = new Cliente("Florencia", "Martinez", "florencia19@gmail.com", "Florencia3456");
+            AltaCliente(c5);
 
-                Mozo m1 = new Mozo("Pedro", "Fagundez", 1);
-                AltaMozo(m1); //llamamos al métod AltaMozo para validr y agregar los mozos al sistema.
-                Mozo m2 = new Mozo("Leandro", "Sanchez", 2);
-                AltaMozo(m2);
-                Mozo m3 = new Mozo("Lorena", "Varela", 3);
-                AltaMozo(m3);
-                Mozo m4 = new Mozo("Paola", "Pacheco", 4);
-                AltaMozo(m4);
-                Mozo m5 = new Mozo("Santiago", "Benitez", 5);
-                AltaMozo(m5);
+            Mozo m1 = new Mozo("Pedro", "Fagundez", 1);
+            AltaMozo(m1); //llamamos al métod AltaMozo para validr y agregar los mozos al sistema.
+            Mozo m2 = new Mozo("Leandro", "Sanchez", 2);
+            AltaMozo(m2);
+            Mozo m3 = new Mozo("Lorena", "Varela", 3);
+            AltaMozo(m3);
+            Mozo m4 = new Mozo("Paola", "Pacheco", 4);
+            AltaMozo(m4);
+            Mozo m5 = new Mozo("Santiago", "Benitez", 5);
+            AltaMozo(m5);
 
-                Repartidor r1 = new Repartidor("Javier", "Perez", Repartidor.Vehiculos.APie);
-                AltaRepartidor(r1); //llamamos al métod AltaRepartidor para validr y agregar los repartidores al sistema.
-                Repartidor r2 = new Repartidor("Gonzalo", "Ramirez", Repartidor.Vehiculos.Bicicleta);
-                AltaRepartidor(r2);
+            Repartidor r1 = new Repartidor("Javier", "Perez", Repartidor.Vehiculos.APie);
+            AltaRepartidor(r1); //llamamos al métod AltaRepartidor para validr y agregar los repartidores al sistema.
+            Repartidor r2 = new Repartidor("Gonzalo", "Ramirez", Repartidor.Vehiculos.Bicicleta);
+            AltaRepartidor(r2);
 
-                Repartidor r3 = new Repartidor("Maria", "Gutierrez", Repartidor.Vehiculos.Moto);
-                AltaRepartidor(r3);
+            Repartidor r3 = new Repartidor("Maria", "Gutierrez", Repartidor.Vehiculos.Moto);
+            AltaRepartidor(r3);
 
-                Repartidor r4 = new Repartidor("Rossana", "Villar", Repartidor.Vehiculos.Moto);
-                AltaRepartidor(r4);
+            Repartidor r4 = new Repartidor("Rossana", "Villar", Repartidor.Vehiculos.Moto);
+            AltaRepartidor(r4);
 
-                Repartidor r5 = new Repartidor("Ana", "Cubero", Repartidor.Vehiculos.APie);
-                AltaRepartidor(r5);
+            Repartidor r5 = new Repartidor("Ana", "Cubero", Repartidor.Vehiculos.APie);
+            AltaRepartidor(r5);
 
 
-                Delivery d1 = new Delivery(c1, DateTime.Parse("2022-03-03"), "Ramirez 123", r1, 12);
-                servicios.Add(d1); //no es relevante la validación de los datos, se agregan directamente al sistema.
+            Delivery d1 = new Delivery(c1, DateTime.Parse("2022-03-03"), "Ramirez 123", r1, 12);
+            servicios.Add(d1); //no es relevante la validación de los datos, se agregan directamente al sistema.
                 
-                Delivery d2 = new Delivery(c2, DateTime.Parse("2021-03-03"), "Bolivar 456", r2, 5);
-                servicios.Add(d2);
-                Delivery d3 = new Delivery(c3, DateTime.Parse("2021-04-03"), "Bolivia 789", r3, 9);
-                servicios.Add(d3);
-                Delivery d4 = new Delivery(c4, DateTime.Parse("2021-09-23"), "Nin y Silva 123", r4, 22);
-                servicios.Add(d4);
-                Delivery d5 = new Delivery(c5, DateTime.Parse("2022-01-30"), "Rivera 456", r5, 11);
-                servicios.Add(d5);
-                Local l1 = new Local(c1, DateTime.Parse("2021-03-03"), 1, m4, 7);
-                servicios.Add(l1);
-                Local l2 = new Local(c3, DateTime.Parse("2022-07-15"), 3, m5, 2);
-                servicios.Add(l2);
-                Local l3 = new Local(c2, DateTime.Parse("2020-10-19"), 4, m1, 1);
-                servicios.Add(l3);
-                Local l4 = new Local(c5, DateTime.Parse("2021-12-01"), 2, m3, 5);
-                servicios.Add(l4);
-                Local l5 = new Local(c5, DateTime.Parse("2021-08-23"), 4, m2, 4);
-                servicios.Add(l5);
-                CerrarServicio(d1.Id);
-                CerrarServicio(d2.Id);
-                CerrarServicio(d3.Id);
-                CerrarServicio(d4.Id);
-                CerrarServicio(d5.Id);
-                CerrarServicio(l1.Id);
-                CerrarServicio(l2.Id);
-                CerrarServicio(l3.Id);
-                CerrarServicio(l4.Id);
-                CerrarServicio(l5.Id);
+            Delivery d2 = new Delivery(c2, DateTime.Parse("2021-03-03"), "Bolivar 456", r2, 5);
+            servicios.Add(d2);
+            Delivery d3 = new Delivery(c3, DateTime.Parse("2021-04-03"), "Bolivia 789", r3, 9);
+            servicios.Add(d3);
+            Delivery d4 = new Delivery(c4, DateTime.Parse("2021-09-23"), "Nin y Silva 123", r4, 22);
+            servicios.Add(d4);
+            Delivery d5 = new Delivery(c5, DateTime.Parse("2022-01-30"), "Rivera 456", r5, 11);
+            servicios.Add(d5);
+            Local l1 = new Local(c1, DateTime.Parse("2021-03-03"), 1, m4, 7);
+            servicios.Add(l1);
+            Local l2 = new Local(c3, DateTime.Parse("2022-07-15"), 3, m5, 2);
+            servicios.Add(l2);
+            Local l3 = new Local(c2, DateTime.Parse("2020-10-19"), 4, m1, 1);
+            servicios.Add(l3);
+            Local l4 = new Local(c5, DateTime.Parse("2021-12-01"), 2, m3, 5);
+            servicios.Add(l4);
+            Local l5 = new Local(c5, DateTime.Parse("2021-08-23"), 4, m2, 4);
+            servicios.Add(l5);
+            CerrarServicio(d1.Id);
+            CerrarServicio(d2.Id);
+            CerrarServicio(d3.Id);
+            CerrarServicio(d4.Id);
+            CerrarServicio(d5.Id);
+            CerrarServicio(l1.Id);
+            CerrarServicio(l2.Id);
+            CerrarServicio(l3.Id);
+            CerrarServicio(l4.Id);
+            CerrarServicio(l5.Id);
 
 
             Plato p1 = new Plato("Milanesa", 345);
-                AltaPlato(p1); //llamamos al métod AltaPlato para validr y agregar los platos al sistema.
+            AltaPlato(p1); //llamamos al métod AltaPlato para validr y agregar los platos al sistema.
 
-                Plato p2 = new Plato("Pollo", 405);
-                AltaPlato(p2);
+            Plato p2 = new Plato("Pollo", 405);
+            AltaPlato(p2);
 
-                Plato p3 = new Plato("Ensalada", 250);
-                AltaPlato(p3);
+            Plato p3 = new Plato("Ensalada", 250);
+            AltaPlato(p3);
 
-                Plato p4 = new Plato("Hamburguesa al plato", 180);
-                AltaPlato(p4);
+            Plato p4 = new Plato("Hamburguesa al plato", 180);
+            AltaPlato(p4);
 
-                Plato p5 = new Plato("Nuggets", 250);
-                AltaPlato(p5);
+            Plato p5 = new Plato("Nuggets", 250);
+            AltaPlato(p5);
 
-                Plato p6 = new Plato("Guiso", 450);
-                AltaPlato(p6);
+            Plato p6 = new Plato("Guiso", 450);
+            AltaPlato(p6);
 
-                Plato p7 = new Plato("Nioqui", 370);
-                AltaPlato(p7);
+            Plato p7 = new Plato("Nioqui", 370);
+            AltaPlato(p7);
 
-                Plato p8 = new Plato("Pascualina", 180);
-                AltaPlato(p8);
+            Plato p8 = new Plato("Pascualina", 180);
+            AltaPlato(p8);
 
-                Plato p9 = new Plato("Canelones de carne", 270);
-                AltaPlato(p9);
+            Plato p9 = new Plato("Canelones de carne", 270);
+            AltaPlato(p9);
 
-                Plato p10 = new Plato("Lasagna", 410);
-                AltaPlato(p10);
-            }
+            Plato p10 = new Plato("Lasagna", 410);
+            AltaPlato(p10);
+
+            AgregarPlato(1, 1, 3);
+            AgregarPlato(2, 2, 2);
+            AgregarPlato(3, 3, 1);
+            AgregarPlato(4, 4, 2);
+            AgregarPlato(5, 5, 3);
+            AgregarPlato(6, 6, 1);
+            AgregarPlato(7, 7, 2);
+            AgregarPlato(8, 8, 3);
+            AgregarPlato(9, 9, 4);
+            AgregarPlato(0, 0, 3);
+            AgregarPlato(1, 2, 3);
+            AgregarPlato(2, 4, 2);
+            AgregarPlato(3, 7, 1);
+            AgregarPlato(4, 4, 2);
+            AgregarPlato(5, 0, 3);
+            AgregarPlato(6, 5, 1);
+            AgregarPlato(7, 2, 2);
+            AgregarPlato(8, 1, 3);
+            AgregarPlato(9, 0, 4);
+            AgregarPlato(0, 9, 3);
+
         }
     }
+}
 
  
