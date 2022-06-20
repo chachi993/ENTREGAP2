@@ -142,12 +142,56 @@ namespace ObligatorioP2MVC.Controllers
             }
 
         }
-        public IActionResult CerrarServicio(int idServicio)
+        public IActionResult CerrarServicio(int id)
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-                s.CerrarServicio(idServicio);
+                s.CerrarServicio(id);
                 return RedirectToAction("MisServicios", "Servicio");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult AltaLocal() // funcion para pedir un servicio de tipo Local.
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                List<Mozo> lm = s.GetMozos();
+
+                ViewBag.Mozos = lm;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+        [HttpPost]
+        public IActionResult AltaLocal(int numeroMesa, int slcMozo, int cantidadComensales)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales);
+                return RedirectToAction("MisServicios", "Servicio");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public IActionResult ServiciosMasCaros()
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> servicios = s.GetServiciosMasCarosPorIdCliente(idLogueado);
+                return View(servicios);
             }
             else
             {

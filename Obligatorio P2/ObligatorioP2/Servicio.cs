@@ -57,8 +57,6 @@ namespace ObligatorioP2
             PrecioFinal = sumaMontos;
             return sumaMontos;
         }
-        
-
 
         public void CambiarEstado()
         {
@@ -81,7 +79,5 @@ namespace ObligatorioP2
         {
             Platos.Add(pc);
         }
-
-
     }
 }

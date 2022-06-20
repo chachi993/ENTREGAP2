@@ -127,18 +127,71 @@ namespace ObligatorioP2
 
             return null;
         }
-        public void CerrarServicio(int idServicio)
+        public void CerrarServicio(int? idServicio)
         {
             foreach (Servicio s in servicios)
             {
                 if (s.Id.Equals(idServicio))
                 {
                     if (s.Estado.Equals("Abierto")){
-                        s.CambiarEstado();
-                        s.CalcularPrecio();
+                        s.CerrarServicio();
                     }
                 }
             }
+        }
+        public void AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
+        {
+            Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
+            servicios.Add(nuevo);
+        }
+        public List<Servicio> GetServiciosMasCarosPorIdCliente(int? idCliente)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            double sMasCaro = 0;
+
+            List<Servicio> serviciosCliente = GetServiciosPorCliente(idCliente); //de cliente logueado
+
+            foreach (Servicio s in serviciosCliente)
+            {
+                if (s.PrecioFinal > sMasCaro)
+                {
+                    sMasCaro = s.PrecioFinal;
+                    ret.Clear();
+                    ret.Add(s);
+                }
+                else if (s.PrecioFinal.Equals(sMasCaro))
+                {
+                    ret.Add(s);
+                }
+            }
+            return ret;
+        }
+        public List<Servicio> GetServiciosSegunNombreDePlato(string nombre)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Servicio s in servicios)
+            {
+                foreach (Plato p in platos)
+                    if (p.Nombre.Equals(nombre))
+                    {
+                        ret.Add(s);
+                    }
+            }
+            return ret;
+        }
+        public Mozo GetMozoPorId(int num)
+        {
+            Mozo ret = null;
+            List<Mozo> mozos = GetMozos();
+
+            foreach (Mozo m in mozos)
+            {
+                if (m.Id.Equals(num))
+                {
+                    ret = m;
+                }
+            }
+            return ret;
         }
 
         public List<PlatoCantidad> GetPlatosCantidadPrServicio(int id)

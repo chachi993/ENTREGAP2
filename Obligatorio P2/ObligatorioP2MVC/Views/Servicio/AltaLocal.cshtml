@@ -1,0 +1,41 @@
+﻿@model ObligatorioP2.Local
+
+@{ ViewData["Title"] = "AltaLocal"; }
+
+<h1>Pedir Servicio Local</h1>
+
+<h4>Alta Local</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AltaLocal">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NumeroMesa" name="numeroMesa" class="control-label">Número de mesa</label>
+                <input asp-for="NumeroMesa" name="numeroMesa" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CantidadComensales" class="control-label"> Cantidad de comensales</label>
+                <input asp-for="CantidadComensales" class="form-control" />
+            </div>
+            <select name="slcMozo">
+                @foreach (var Mozo in ViewBag.Mozos)
+                {
+                     <option value="@Mozo.Id">@Mozo.Nombre</option>}
+            </select>
+            <br /><br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<p>@ViewBag</p>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
