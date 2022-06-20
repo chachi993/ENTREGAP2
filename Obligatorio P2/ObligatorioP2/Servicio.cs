@@ -42,6 +42,10 @@ namespace ObligatorioP2
         public virtual double CalcularPrecio() //la clase padre Servicio emplea CalcularPrecio a su manera.
                                                //las clases hijas la utilizan o no, y lo resuelven como lo hizo su clase padre.
         {
+            if (Estado == "Cerrado")
+            {
+                return -1;
+            }
             double sumaMontos = 0;
 
             foreach (PlatoCantidad pc in Platos) //para cada plato de la lista que contiene la cantidad de los distintos plato, me quedo con su precio y la cantidad.
@@ -63,9 +67,14 @@ namespace ObligatorioP2
 
             Estado = "Cerrado";
 
-            } else if (Estado == "Cerrado"){
-                Estado = "Abierto";
-
+            } 
+        }
+        public void CerrarServicio()
+        {
+            if (Estado == "Abierto")
+            {
+                PrecioFinal = CalcularPrecio();
+                Estado = "Cerrado";
             }
         }
         public void AgregarPlato(PlatoCantidad pc)

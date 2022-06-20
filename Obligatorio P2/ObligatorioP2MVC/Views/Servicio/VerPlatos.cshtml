@@ -17,10 +17,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Plato.Precio)
             </th>
-            <th>
-                
-            </th>
-            
         </tr>
     </thead>
     <tbody>
@@ -37,10 +33,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Plato.Precio)
                 </td>
-                
+
                 <td>
                 </td>
             </tr>
+
         }
     </tbody>
 </table>
+<div>
+    <input asp-action="CerrarServicio" type="submit" value="Cerrar Servicio" class="btn btn-primary" />
+</div>
+

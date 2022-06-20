@@ -11,7 +11,6 @@ namespace ObligatorioP2MVC.Controllers
     public class ServicioController : Controller
     {
         Sistema s = Sistema.GetInstancia();
-        private bool lp;
 
         public IActionResult Index()
         {
@@ -143,9 +142,17 @@ namespace ObligatorioP2MVC.Controllers
             }
 
         }
-
-       
-
-
+        public IActionResult CerrarServicio(int idServicio)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                s.CerrarServicio(idServicio);
+                return RedirectToAction("MisServicios", "Servicio");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }
