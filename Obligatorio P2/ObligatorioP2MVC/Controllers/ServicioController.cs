@@ -84,7 +84,7 @@ namespace ObligatorioP2MVC.Controllers
 
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 s.AltaDelivery(idLogueado, direccion, distancia, slcRepartidor);
-                return View();
+                return RedirectToAction("MisServicios", "Servicio");
             }
             else
             {

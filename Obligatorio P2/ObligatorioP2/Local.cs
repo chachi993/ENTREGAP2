@@ -25,6 +25,7 @@ namespace ObligatorioP2
             NumeroMesa = numeroMesa;
             Mozo = mozo;
             CantidadComensales = cantidadComensales;
+            Estado = "Abierto";
         }
 
         public override double CalcularPrecio() //redefine la función CalcularPrecio traída de su clase padre y utiliza el resto. 

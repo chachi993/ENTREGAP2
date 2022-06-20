@@ -113,7 +113,19 @@ namespace ObligatorioP2
 
             return null;
         }
-
+        public void CerrarServicio(int idServicio)
+        {
+            foreach (Servicio s in servicios)
+            {
+                if (s.Id.Equals(idServicio))
+                {
+                    if (s.Estado.Equals("Abierto")){
+                        s.CambiarEstado();
+                        s.CalcularPrecio();
+                    }
+                }
+            }
+        }
 
         public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
         {
@@ -400,7 +412,8 @@ namespace ObligatorioP2
 
 
                 Delivery d1 = new Delivery(c1, DateTime.Parse("2022-03-03"), "Ramirez 123", r1, 12);
-                servicios.Add(d1); //no es relevante la validación de los datos, se agregan directamente al sistema. 
+                servicios.Add(d1); //no es relevante la validación de los datos, se agregan directamente al sistema.
+                
                 Delivery d2 = new Delivery(c2, DateTime.Parse("2021-03-03"), "Bolivar 456", r2, 5);
                 servicios.Add(d2);
                 Delivery d3 = new Delivery(c3, DateTime.Parse("2021-04-03"), "Bolivia 789", r3, 9);
@@ -419,9 +432,19 @@ namespace ObligatorioP2
                 servicios.Add(l4);
                 Local l5 = new Local(c5, DateTime.Parse("2021-08-23"), 4, m2, 4);
                 servicios.Add(l5);
+                CerrarServicio(d1.Id);
+                CerrarServicio(d2.Id);
+                CerrarServicio(d3.Id);
+                CerrarServicio(d4.Id);
+                CerrarServicio(d5.Id);
+                CerrarServicio(l1.Id);
+                CerrarServicio(l2.Id);
+                CerrarServicio(l3.Id);
+                CerrarServicio(l4.Id);
+                CerrarServicio(l5.Id);
 
 
-                Plato p1 = new Plato("Milanesa", 345);
+            Plato p1 = new Plato("Milanesa", 345);
                 AltaPlato(p1); //llamamos al métod AltaPlato para validr y agregar los platos al sistema.
 
                 Plato p2 = new Plato("Pollo", 405);

@@ -19,13 +19,14 @@ namespace ObligatorioP2
 
         public double PrecioFinal { get; set; } = 0;
 
-        public bool Estado { get; set; } //darle true al darle alta
+        public string Estado { get; set; } //darle true al darle alta
 
         public string ListaPlatos { get; set; }
 
 
         public Servicio()
         {
+            
         }
 
         public Servicio(Cliente cliente, DateTime fecha)
@@ -34,8 +35,7 @@ namespace ObligatorioP2
             UltimoId++;
             Cliente = cliente;
             Fecha = fecha;
-            PrecioFinal = CalcularPrecio();
-            Estado = false;
+            Estado = "Abierto";
             ListaPlatos = ListarPlatos();
         }
         
@@ -64,7 +64,20 @@ namespace ObligatorioP2
             }
             return ret;
         }
-        
+
+
+        public void CambiarEstado()
+        {
+            if(Estado == "Abierto")
+            {
+
+            Estado = "Cerrado";
+
+            } else if (Estado == "Cerrado"){
+                Estado = "Abierto";
+
+            }
+        }
 
     }
 }
