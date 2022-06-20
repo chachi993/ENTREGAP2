@@ -389,9 +389,9 @@ namespace ObligatorioP2
 
         public bool AgregarPlato(int? idServicio, int? idPlato, int cantidad)
         {
-            if (idPlato != null && idServicio!=null && cantidad > 0){
+            if (idPlato != null && idServicio != null && cantidad > 0){
 
-                Plato p = GetPlatosOrdenadosPorNombreId(idPlato);
+                Plato p = GetPlatoPorId(idPlato);
                 PlatoCantidad pc = new PlatoCantidad(p, cantidad);
                 Servicio s = GetServicioPorId(idServicio);
                 s.AgregarPlato(pc);
@@ -416,10 +416,11 @@ namespace ObligatorioP2
             return null;
         }
 
-        private Plato GetPlatosOrdenadosPorNombreId(int? idPlato)
+  
+        private Plato GetPlatoPorId(int? idPlato)
         {
             foreach (Plato p in platos)
-               
+
             {
                 if (p.Id.Equals(idPlato))
                 {

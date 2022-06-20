@@ -120,7 +120,7 @@ namespace ObligatorioP2MVC.Controllers
             {
 
                 s.AgregarPlato(id, slcPlato, cantidad );
-                return View();
+                return RedirectToAction("MisServicios", "Servicio" );
             }
             else
             {
