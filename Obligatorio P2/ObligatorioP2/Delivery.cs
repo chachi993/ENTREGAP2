@@ -4,7 +4,7 @@ namespace ObligatorioP2
     public class Delivery : Servicio // la clase Delivery hereda instancias y métodos de su clase padre (Servicio).
     {
         //creamos las instancias únicas de la clase Delivery
-        public string Dirección { get; set; }
+        public string Direccion { get; set; }
 
         public Repartidor Repartidor { get; set; }
 
@@ -15,13 +15,13 @@ namespace ObligatorioP2
         {
         }
 
-        public Delivery(Cliente cliente, DateTime fecha, string dirección, Repartidor repartidor, int distanciaKM)
+        public Delivery(Cliente cliente, DateTime fecha, string direccion, Repartidor repartidor, int distanciaKM)
         {
             Id = UltimoId;
             UltimoId++;
             Cliente = cliente;
             Fecha = fecha;
-            Dirección = dirección;
+            Direccion = direccion;
             Repartidor = repartidor;
             DistanciaKM = distanciaKM;
         }

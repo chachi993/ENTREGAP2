@@ -58,8 +58,41 @@ namespace ObligatorioP2MVC.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
 
+        public IActionResult AltaDelivery()
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                List<Repartidor> lr = s.GetRepartidores();
+
+                ViewBag.Repartidores = lr;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+        }
+
+        [HttpPost]
+        public IActionResult AltaDelivery(string direccion, int distancia, int slcRepartidor)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                s.AltaDelivery(idLogueado, direccion, distancia, slcRepartidor);
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
         }
+
+
     }
 }

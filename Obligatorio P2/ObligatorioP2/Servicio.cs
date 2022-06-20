@@ -38,6 +38,7 @@ namespace ObligatorioP2
             Estado = false;
             ListaPlatos = ListarPlatos();
         }
+        
 
 
         public virtual double CalcularPrecio() //la clase padre Servicio emplea CalcularPrecio a su manera.

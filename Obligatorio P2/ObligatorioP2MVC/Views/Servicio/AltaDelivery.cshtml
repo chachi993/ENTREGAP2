@@ -1,0 +1,47 @@
+﻿@model ObligatorioP2.Delivery
+
+@{
+    ViewData["Title"] = "AltaDelivery";
+}
+
+<h1>Alta Delivery</h1>
+
+<h4>Delivery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AltaDelivery">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label"> Direccion</label>
+                <input type="text" name="direccion" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label"> distancia en KM</label>
+                <input type="number" name="distancia" class="form-control" />
+            </div>
+            <select name="slcRepartidor">
+                @foreach (var Repartidor in ViewBag.Repartidores)
+                {
+                    <option value="@Repartidor.Id">@Repartidor.Nombre</option>
+
+                }
+
+
+            </select>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<p>@ViewBag</p>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

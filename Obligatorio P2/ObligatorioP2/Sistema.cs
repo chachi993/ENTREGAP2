@@ -81,6 +81,45 @@ namespace ObligatorioP2
 
             return ret;
         }
+        public Cliente GetClientePorId(int? idCliente)
+        {
+            foreach (Persona p in personas)
+            {
+                if (p.Id.Equals(idCliente))
+                {
+                    if (p is Cliente)
+                    {
+                        Cliente aux = p as Cliente;
+                        return aux;
+                    }
+                }
+            }
+            
+            return null;
+        }
+        public Cliente GetCliente(int? idCliente)
+        {
+            foreach (Persona p in personas)
+            {
+                if (p.Id.Equals(idCliente))
+                {
+                    if (p is Cliente)
+                    {
+                        Cliente aux = p as Cliente;
+                        return aux;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+
+        public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
+        {
+            Delivery nuevo = new Delivery (GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
+            servicios.Add(nuevo);
+        }
 
         public List<Delivery> GetDeliveries()
         //el métod (similar que GetClientesOrdenados) devuelve una lista de deliveries, obtenida de la lista servicios.
@@ -293,7 +332,6 @@ namespace ObligatorioP2
             return null;
         }
 
-        
 
         public bool NumeroFuncionarioExiste(int numero) 
         {
