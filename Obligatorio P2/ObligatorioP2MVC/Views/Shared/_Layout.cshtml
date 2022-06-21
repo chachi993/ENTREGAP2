@@ -47,6 +47,18 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="AltaLocal">Pedir Servicio Local</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="ServiciosPorPlato">Servicios Por Plato</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="ServiciosMasCaros">Servicios Mas Caros</a>
+                                </li>
+                            }
+                            else if (Context.Session.GetString("LogueadoRol") == "Mozo")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="ServiciosLocalesAtendioMozo">Ver Servicios</a>
+                                </li>
                             }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar Sesión</a>

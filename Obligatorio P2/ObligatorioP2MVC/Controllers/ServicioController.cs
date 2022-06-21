@@ -198,5 +198,76 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public IActionResult ServiciosPorPlato()
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                List<Plato> lp = s.GetPlatos();
+                List<Servicio> servicios = new List<Servicio>();
+                ViewBag.Platos = lp;
+                return View(servicios);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult ServiciosPorPlato(string slcPlato)
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
+            {
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> servicios= s.GetServiciosSegunNombreDePlato(slcPlato, idLogueado);
+                return View(servicios);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public IActionResult ServiciosLocalesAtendioMozo()
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Mozo")
+            {
+
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> misServicios = s.GetServiciosPorMozo(idLogueado);
+                return View(misServicios);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ServiciosLocalesAtendioMozo(DateTime f1, DateTime f2)
+        {
+            if (HttpContext.Session.GetInt32("LogueadoId") == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (HttpContext.Session.GetString("LogueadoRol") == "Mozo")
+            {
+                if (f1 != null && f2 != null)
+                {
+                    int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                    List<Servicio> misServicios = s.GetServiciosLocalesPorMozoEntreFechas(idLogueado, f1, f2);
+                    return View(misServicios);
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

@@ -27,5 +27,21 @@
             Rol = "Cliente";
             IdPersona = c.Id;
         }
+        public Usuario(Mozo m, string user, string password)
+        {
+
+            UserName = user;
+            Password = password;
+            Rol = "Mozo";
+            IdPersona = m.Id;
+        }
+        public Usuario(Repartidor r, string user, string password)
+        {
+
+            UserName = user;
+            Password = password;
+            Rol = "Repartidor";
+            IdPersona = r.Id;
+        }
     }
 }

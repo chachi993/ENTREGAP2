@@ -52,7 +52,7 @@ namespace ObligatorioP2
 
         public List<Mozo> GetMozos()
         {
-            //el métod (al igual que GetClientesOrdenados) devuelve una lista de mozos, obtenida de la lista personas.
+            //el método (al igual que GetClientesOrdenados) devuelve una lista de mozos, obtenida de la lista personas.
             List<Mozo> ret = new List<Mozo>();
             foreach (Persona p in personas)
             {
@@ -62,7 +62,6 @@ namespace ObligatorioP2
                     ret.Add(aux);
                 }
             }
-            
             return ret;
         }
 
@@ -166,13 +165,13 @@ namespace ObligatorioP2
             }
             return ret;
         }
-        public List<Servicio> GetServiciosSegunNombreDePlato(string nombre)
+        public List<Servicio> GetServiciosSegunNombreDePlato(string nombre, int? idlogueado)
         {
             List<Servicio> ret = new List<Servicio>();
-            foreach (Servicio s in servicios)
+            foreach (Servicio s in GetServiciosPorCliente(idlogueado))
             {
-                foreach (Plato p in platos)
-                    if (p.Nombre.Equals(nombre))
+                foreach (PlatoCantidad pc in GetPlatosCantidadPrServicio(s.Id))
+                    if (pc.Plato.Nombre.Equals(nombre))
                     {
                         ret.Add(s);
                     }
@@ -265,17 +264,12 @@ namespace ObligatorioP2
             }
         }
 
-
         public List<Delivery> GetServiciosPorRepartidorEntreFechas(Repartidor repartidor, DateTime fecha1, DateTime fecha2)
-
         {
             List<Delivery> ret = new List<Delivery>();
-
             List<Delivery> deliverys = GetDeliveries(); //creamos lista de deliveries con GetDeliveries.
-
             //se recorre la lista de deliveries. Si el repartidor es el mismo que el argumento dado, y la fecha está en el rango
             //brindado: se agrega el objeto delivery a la lista de retorno.
-
             foreach (Delivery d in deliverys)
             {
                 if (repartidor == d.Repartidor) 
@@ -314,6 +308,23 @@ namespace ObligatorioP2
                    
                     ret.Add(s);
                     
+                }
+            }
+            return ret;
+        }
+        public List<Servicio> GetServiciosPorMozo(int? id)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Servicio s in servicios)
+            {
+                if(s is Local)
+                {
+                    Local aux = s as Local;
+                    if (id == aux.Mozo.Id)
+                    {
+                        ret.Add(aux);
+
+                    }
                 }
             }
             return ret;
@@ -391,6 +402,13 @@ namespace ObligatorioP2
                 return c;
             }
             return null;
+        }
+        public Mozo AltaMozoComoUsuario(Mozo m, string username, string password)
+        {
+            personas.Add(m);
+            Usuario nuevo = new Usuario(m, username, password);
+            usuarios.Add(nuevo);
+            return m;
         }
 
         public Persona ValidarDatosLogin(string user, string pass)
@@ -482,6 +500,29 @@ namespace ObligatorioP2
             }
             return null;
         }
+        public List<Servicio> GetServiciosLocalesPorMozoEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Persona p in personas)
+            {
+                if (p is Mozo && p.Id == id)
+                {
+                    Mozo aux = p as Mozo;
+                        foreach (Servicio s in servicios)
+                        {
+                            if (s is Local)
+                            {
+                                Local aux2 = s as Local;
+                                if (aux2.Fecha >= fecha1 && aux2.Fecha <= fecha2 && aux2.Mozo == aux)
+                                {
+                                    ret.Add(aux2);
+                                }
+                            }
+                        }
+                }
+            }
+              return ret;
+        }
 
         private void PreCarga()
         {
@@ -502,7 +543,7 @@ namespace ObligatorioP2
             AltaCliente(c5);
 
             Mozo m1 = new Mozo("Pedro", "Fagundez", 1);
-            AltaMozo(m1); //llamamos al métod AltaMozo para validr y agregar los mozos al sistema.
+            AltaMozoComoUsuario(m1, "Pedro1", "Pedro1" ); //llamamos al métod AltaMozo para validr y agregar los mozos al sistema.
             Mozo m2 = new Mozo("Leandro", "Sanchez", 2);
             AltaMozo(m2);
             Mozo m3 = new Mozo("Lorena", "Varela", 3);
