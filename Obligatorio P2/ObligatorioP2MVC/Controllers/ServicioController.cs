@@ -269,5 +269,18 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public IActionResult ServiciosRepartidor()
+        {
+            if (HttpContext.Session.GetString("LogueadoRol") == "Repartidor")
+            {
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> servicios = s.GetServiciosPorRepartidorOrdenadosPorFecha(idLogueado);
+                return View(servicios);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

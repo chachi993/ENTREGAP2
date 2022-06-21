@@ -60,6 +60,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="ServiciosLocalesAtendioMozo">Ver Servicios</a>
                                 </li>
                             }
+                            else if (Context.Session.GetString("LogueadoRol") == "Repartidor")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Servicio" asp-action="ServiciosRepartidor">Ver Servicios</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar Sesión</a>
                             </li>

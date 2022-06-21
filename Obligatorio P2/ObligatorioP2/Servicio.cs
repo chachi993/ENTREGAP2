@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ObligatorioP2
 {
-    public abstract class Servicio // si existe una instancia de servicio, ejemplo take away, no seria abstract.
+    public abstract class Servicio: IComparable<Servicio>  // si existe una instancia de servicio, ejemplo take away, no seria abstract.
     {
 
         // creamos las instancias que tienen en común todas las clases hijas de clase Servicio.
@@ -78,6 +79,21 @@ namespace ObligatorioP2
         public void AgregarPlato(PlatoCantidad pc)
         {
             Platos.Add(pc);
+        }
+        public virtual int CompareTo([AllowNull] Servicio other)
+        {
+            if (Fecha.CompareTo(other.Fecha) > 0)
+            {
+                return 1;
+            }
+            else if (Fecha.CompareTo(other.Fecha) < 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

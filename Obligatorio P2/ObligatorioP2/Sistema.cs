@@ -410,6 +410,13 @@ namespace ObligatorioP2
             usuarios.Add(nuevo);
             return m;
         }
+        public Repartidor AltaRepartidorComoUsuario(Repartidor r, string username, string password)
+        {
+            personas.Add(r);
+            Usuario nuevo = new Usuario(r, username, password);
+            usuarios.Add(nuevo);
+            return r;
+        }
 
         public Persona ValidarDatosLogin(string user, string pass)
         {
@@ -523,6 +530,31 @@ namespace ObligatorioP2
             }
               return ret;
         }
+        public List<Servicio> GetServiciosPorRepartidorOrdenadosPorFecha(int? id)
+        {
+            List<Servicio> serviciosOrdenados = new List<Servicio>();
+            foreach (Persona p in personas)
+            {
+                if (p is Repartidor && p.Id == id)
+                {
+                    Repartidor aux = p as Repartidor;
+                        foreach (Servicio s in servicios)
+                        {
+                            if (s is Delivery)
+                            {
+                                Delivery d = s as Delivery;
+                                if (d.Repartidor.Equals(aux))
+                                {
+                                    serviciosOrdenados.Add(s);
+                                }
+                            }
+                        }
+                }
+            }
+             serviciosOrdenados.Sort();
+             return serviciosOrdenados;
+        }
+
 
         private void PreCarga()
         {
@@ -554,7 +586,7 @@ namespace ObligatorioP2
             AltaMozo(m5);
 
             Repartidor r1 = new Repartidor("Javier", "Perez", Repartidor.Vehiculos.APie);
-            AltaRepartidor(r1); //llamamos al métod AltaRepartidor para validr y agregar los repartidores al sistema.
+            AltaRepartidorComoUsuario(r1, "Javier1", "Javier1"); //llamamos al método AltaRepartidor para validar y agregar los repartidores al sistema.
             Repartidor r2 = new Repartidor("Gonzalo", "Ramirez", Repartidor.Vehiculos.Bicicleta);
             AltaRepartidor(r2);
 
