@@ -15,6 +15,8 @@ namespace ObligatorioP2
         private List<Servicio> servicios = new List<Servicio>();
         private List<Usuario> usuarios = new List<Usuario>();
 
+
+        //metodo Singleton para no tener mas de una instancioa de una clase. 
         private Sistema()
         {
             PreCarga(); //colocamos PreCarga en constructor de System.
@@ -30,12 +32,14 @@ namespace ObligatorioP2
             return instancia;
         }
 
+        
         public List<Servicio> GetServiciosPorClienteEntreFechas(int? idLogueado)
         {
             throw new NotImplementedException();
         }
 
-        public List<Cliente> GetClientesOrdenados() //métod que retorna una lista de clientes ordenados por un criterio.
+        //métod que retorna una lista de clientes ordenados por un criterio.
+        public List<Cliente> GetClientesOrdenados() 
         {
             List<Cliente> clientesOrdenados = new List<Cliente>(); //creamos variable de tipo lista para los clientes ordenados.
             foreach (Persona p in personas)//recorremos la lista de personas. 
@@ -50,9 +54,9 @@ namespace ObligatorioP2
             return clientesOrdenados; //devolvemos la lista ordenada.
         }
 
+        //el método (al igual que GetClientesOrdenados) devuelve una lista de mozos, obtenida de la lista personas.
         public List<Mozo> GetMozos()
         {
-            //el método (al igual que GetClientesOrdenados) devuelve una lista de mozos, obtenida de la lista personas.
             List<Mozo> ret = new List<Mozo>();
             foreach (Persona p in personas)
             {
@@ -65,9 +69,9 @@ namespace ObligatorioP2
             return ret;
         }
 
+        //el métod (al igual que GetClientesOrdenados) devuelve una lista de repartidores, obtenida de la lista personas.
         public List<Repartidor> GetRepartidores()
         {
-            //el métod (al igual que GetClientesOrdenados) devuelve una lista de repartidores, obtenida de la lista personas.
             List<Repartidor> ret = new List<Repartidor>();
             foreach (Persona p in personas)
             {
@@ -80,6 +84,8 @@ namespace ObligatorioP2
 
             return ret;
         }
+
+        //Buscamos y obtenemos recorriendo la lista de personas un Cliente en especifico a traves de su id.
         public Cliente GetClientePorId(int? idCliente)
         {
             foreach (Persona p in personas)
@@ -97,6 +103,7 @@ namespace ObligatorioP2
             return null;
         }
 
+        //Buscamos y obtenemos un Servicio recorriendo la lista Servicio a traves de su id.
         public Servicio GetServicioPorId(int id)
         {
             foreach (Servicio s in servicios)
@@ -110,6 +117,7 @@ namespace ObligatorioP2
             return null;
         }
 
+        //Buscamos y obtenemos un Cliente a traves del id ingresado por el usuario.
         public Cliente GetCliente(int? idCliente)
         {
             foreach (Persona p in personas)
@@ -126,6 +134,9 @@ namespace ObligatorioP2
 
             return null;
         }
+
+        //Damos por cerrado un Servicio siempre que este en estado "Abierto". 
+        //Al cerrarlo cambia su estado a "Cerrado" y muestra el Precio Final de la compra.
         public void CerrarServicio(int? idServicio)
         {
             foreach (Servicio s in servicios)
@@ -138,16 +149,26 @@ namespace ObligatorioP2
                 }
             }
         }
+
+        //funcion que permite adquirir un servicio de tipo Local.
+        //agrega a Mozo a la lista de personas.
         public void AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
         {
+            //si los datos son válidos, coincide el id de Cliente y se selecciona un Mozo que este disponible,
+            //se da de alta el nuevo Servicio.
+            
             Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
             servicios.Add(nuevo);
         }
+
+        //metodo que devuelve los servicios mas caros que consumio el Cliente.
+        //si hay empatados, muestra todos los empatados.
         public List<Servicio> GetServiciosMasCarosPorIdCliente(int? idCliente)
         {
             List<Servicio> ret = new List<Servicio>();
             double sMasCaro = 0;
 
+            //utilizamos la funcion ya creada para obtener los servicios del Cliente.
             List<Servicio> serviciosCliente = GetServiciosPorCliente(idCliente); //de cliente logueado
 
             foreach (Servicio s in serviciosCliente)
@@ -165,12 +186,15 @@ namespace ObligatorioP2
             }
             return ret;
         }
+
+        //metodo que devuelve dado el nombre de un plato, todos los servicios de ese Cliente que 
+        //pidio ese plato al menos una vez.
         public List<Servicio> GetServiciosSegunNombreDePlato(string nombre, int? idlogueado)
         {
             List<Servicio> ret = new List<Servicio>();
-            foreach (Servicio s in GetServiciosPorCliente(idlogueado))
+            foreach (Servicio s in GetServiciosPorCliente(idlogueado)) //usamos la funcion donde obtenemos sus servicios
             {
-                foreach (PlatoCantidad pc in GetPlatosCantidadPrServicio(s.Id))
+                foreach (PlatoCantidad pc in GetPlatosCantidadPrServicio(s.Id)) //necesitamos la cantidad de cada plato para que haga el conteo de una sola vez.
                     if (pc.Plato.Nombre.Equals(nombre))
                     {
                         ret.Add(s);
@@ -178,6 +202,8 @@ namespace ObligatorioP2
             }
             return ret;
         }
+
+        //Buscamos y obtenemos un Mozo a partir de su id
         public Mozo GetMozoPorId(int num)
         {
             Mozo ret = null;
@@ -193,6 +219,7 @@ namespace ObligatorioP2
             return ret;
         }
 
+        
         public List<PlatoCantidad> GetPlatosCantidadPrServicio(int id)
         {
             Servicio s = GetServicioPorId(id);
@@ -200,14 +227,19 @@ namespace ObligatorioP2
             return pc;
         }
 
+        //funcion que permite adquirir un servicio de tipo Delivery.
+        //Agrega ese servicio a la lista de servicios del Cliente.
+
         public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
         {
+            //si los datos son válidos, coincide el id de Cliente y se selecciona un Repartidor que este disponible,
+            //se da de alta el nuevo Servicio.
             Delivery nuevo = new Delivery (GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
             servicios.Add(nuevo);
         }
 
         public List<Delivery> GetDeliveries()
-        //el métod (similar que GetClientesOrdenados) devuelve una lista de deliveries, obtenida de la lista servicios.
+        //el método (similar que GetClientesOrdenados) devuelve una lista de deliveries, obtenida de la lista servicios.
         {
             List<Delivery> ret = new List<Delivery>();
             foreach (Servicio s in servicios)
@@ -227,6 +259,8 @@ namespace ObligatorioP2
         {
             return platos;
         }
+
+        //retornamos la lista de platos ordenanos por nombre
         public List<Plato> GetPlatosOrdenadosPorNombre(int? id)
         {
             platos.Sort();
@@ -237,6 +271,8 @@ namespace ObligatorioP2
             platos.Sort();
             return platos;
         }
+
+        //metodo que retorna un Repartidos a partir de su id.
         public Repartidor GetRepartidorPorId(int num) 
         {
             Repartidor ret = null; 
@@ -252,6 +288,8 @@ namespace ObligatorioP2
 
             return ret;
         }
+        
+        //metodo que permite al Cliente darle "like" a un plato una cantidad indefinida.
         public void Likear(int id)
         {
             foreach (Plato p in platos)
@@ -264,6 +302,7 @@ namespace ObligatorioP2
             }
         }
 
+        //retorna una lista de servicios segun el Repartidor dado dos fechas
         public List<Delivery> GetServiciosPorRepartidorEntreFechas(Repartidor repartidor, DateTime fecha1, DateTime fecha2)
         {
             List<Delivery> ret = new List<Delivery>();
@@ -283,6 +322,8 @@ namespace ObligatorioP2
 
             return ret;
         }
+
+        //metodo que retorna los servicios del Cliente que fueron realizados entre dos fechas.
         public List<Servicio> GetServiciosPorClienteEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
         {
             List<Servicio> ret = new List<Servicio>();
@@ -298,6 +339,8 @@ namespace ObligatorioP2
             }
             return ret;
         }
+
+        //metodo que retorna los servicios del Cliente
         public List<Servicio> GetServiciosPorCliente(int? id)
         {
             List<Servicio> ret = new List<Servicio>();
