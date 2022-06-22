@@ -1,15 +1,16 @@
 ﻿<h1>Agregar Plato a Servicio de @ViewBag.Servicio.Fecha </h1>
 
 <form method="post">
-    
-    <div name="id" >Id: @ViewBag.Servicio.Id<div>
+
+    <div name="id">
+        Id: @ViewBag.Servicio.Id<div>
 
             <div class="form-group">
                 <label class="control-label"> Cantidad </label>
-                <input type="number" name="cantidad" class="form-control" required/>
+                <input type="number" name="cantidad" class="form-control" required />
             </div>
             <select name="slcPlato" required>
-                <option value=""disabled selected>Seleccione plato</option>
+                <option value="" disabled selected>Seleccione plato</option>
                 @foreach (var p in ViewBag.Platos)
                 {
                     <option value="@p.Id">@p.Nombre</option>
@@ -18,3 +19,4 @@
             <input type="submit" value="Agregar">
 
 </form>
+<p>@ViewBag.msg</p>

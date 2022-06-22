@@ -667,41 +667,46 @@ namespace ObligatorioP2
             AltaCliente(c1,"Juan1","Juan1"); //llamamos al métod AltaCliente para validr y agregar los clientes al sistema.
 
             Cliente c2 = new Cliente("Romina", "Lopez", "romina19@gmail.com", "Romina3456");
-            AltaCliente(c2);
+            AltaCliente(c2, "Romina1", "Romina1");
 
             Cliente c3 = new Cliente("Claudia", "Pereira", "claudia19@gmail.com", "Claudia3456");
-            AltaCliente(c3);
+            AltaCliente(c3, "Claudia1", "Claudia1");
 
             Cliente c4 = new Cliente("Facundo", "Moreira", "facundo19@gmail.com", "Facundo3456");
-            AltaCliente(c4);
+            AltaCliente(c4, "Facundo1", "Facundo1" );
 
             Cliente c5 = new Cliente("Florencia", "Martinez", "florencia19@gmail.com", "Florencia3456");
-            AltaCliente(c5);
+            AltaCliente(c5, "Florencia1", "Florencia");
 
             Mozo m1 = new Mozo("Pedro", "Fagundez", 1);
             AltaMozoComoUsuario(m1, "Pedro1", "Pedro1" ); //llamamos al métod AltaMozo para validr y agregar los mozos al sistema.
             Mozo m2 = new Mozo("Leandro", "Sanchez", 2);
-            AltaMozo(m2);
+            AltaMozoComoUsuario(m2, "Leandro1", "Lenadro1");
             Mozo m3 = new Mozo("Lorena", "Varela", 3);
-            AltaMozo(m3);
+            AltaMozoComoUsuario(m3, "Lorena1", "Lorena1" );
             Mozo m4 = new Mozo("Paola", "Pacheco", 4);
-            AltaMozo(m4);
+            AltaMozoComoUsuario(m4, "Paola1", "Paola1" );
             Mozo m5 = new Mozo("Santiago", "Benitez", 5);
-            AltaMozo(m5);
+            AltaMozoComoUsuario(m5, "Santiago1", "Santiago1");
+            Mozo m6 = new Mozo("Ramiro", "Gucci", 6);
+            AltaMozoComoUsuario(m6, "Ramiro1", "Ramiro1");
 
             Repartidor r1 = new Repartidor("Javier", "Perez", Repartidor.Vehiculos.APie);
             AltaRepartidorComoUsuario(r1, "Javier1", "Javier1"); //llamamos al método AltaRepartidor para validar y agregar los repartidores al sistema.
             Repartidor r2 = new Repartidor("Gonzalo", "Ramirez", Repartidor.Vehiculos.Bicicleta);
-            AltaRepartidor(r2);
+            AltaRepartidorComoUsuario(r2, "Gonzalo1", "Gonzalo1");
 
             Repartidor r3 = new Repartidor("Maria", "Gutierrez", Repartidor.Vehiculos.Moto);
-            AltaRepartidor(r3);
+            AltaRepartidorComoUsuario(r3, "Maria1", "Maria1");
 
             Repartidor r4 = new Repartidor("Rossana", "Villar", Repartidor.Vehiculos.Moto);
-            AltaRepartidor(r4);
+            AltaRepartidorComoUsuario(r4, "Rossana1", "Rossana1");
 
             Repartidor r5 = new Repartidor("Ana", "Cubero", Repartidor.Vehiculos.APie);
-            AltaRepartidor(r5);
+            AltaRepartidorComoUsuario(r5, "AnaAna1", "AnaAna1");
+
+            Repartidor r6 = new Repartidor("Juana", "Alcubero", Repartidor.Vehiculos.Bicicleta);
+            AltaRepartidorComoUsuario(r6, "Juana1", "Juana1");
 
 
             Delivery d1 = new Delivery(c1, DateTime.Parse("2022-03-03"), "Ramirez 123", r1, 12);
