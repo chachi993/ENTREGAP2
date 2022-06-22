@@ -22,19 +22,10 @@ namespace ObligatorioP2MVC.Controllers
         }
         public IActionResult Biblioteca()
         {
-            if (HttpContext.Session.GetInt32("LogueadoId") == null)
-            {
                 List<Plato> listaPlatos = s.GetPlatosOrdenadosPorNombre();
                 return View(listaPlatos);
-            }
+            
 
-            if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
-            {
-                List<Plato> listaPlatos = s.GetPlatosOrdenadosPorNombre();
-                return View(listaPlatos);
-                
-            }
-            return RedirectToAction("Index", "Home");
         }
     }
 
