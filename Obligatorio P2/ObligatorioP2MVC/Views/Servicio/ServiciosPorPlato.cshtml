@@ -9,7 +9,8 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <select name="slcPlato">
+            <select name="slcPlato" required>
+                <option value="" disabled selected>Seleccione plato</option>
                 @foreach (var p in ViewBag.Platos)
                 {
                     <option value="@p.Nombre">@p.Nombre</option>

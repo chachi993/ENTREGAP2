@@ -10,12 +10,12 @@
         <form method="post">
             <div class="form-group">
                 <label class="control-label"> Fecha 1</label>
-                <input type="date" name="f1" class="form-control" />
+                <input type="date" name="f1" class="form-control" required/>
             </div>
 
             <div class="form-group">
                 <label class="control-label"> Fecha 2</label>
-                <input type="date" name="f2" class="form-control" />
+                <input type="date" name="f2" class="form-control" required/>
             </div>
             <div class="form-group">
                 <input type="submit" value="Mostrar Servicios" class="btn btn-primary" />
@@ -65,3 +65,4 @@
         }
     </tbody>
 </table>
+<p>@ViewBag.msgMozo</p>

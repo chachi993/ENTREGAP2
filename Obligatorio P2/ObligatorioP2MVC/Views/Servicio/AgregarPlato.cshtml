@@ -6,9 +6,10 @@
 
             <div class="form-group">
                 <label class="control-label"> Cantidad </label>
-                <input type="number" name="cantidad" class="form-control" />
+                <input type="number" name="cantidad" class="form-control" required/>
             </div>
-            <select name="slcPlato">
+            <select name="slcPlato" required>
+                <option value=""disabled selected>Seleccione plato</option>
                 @foreach (var p in ViewBag.Platos)
                 {
                     <option value="@p.Id">@p.Nombre</option>

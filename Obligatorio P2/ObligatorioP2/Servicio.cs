@@ -84,11 +84,11 @@ namespace ObligatorioP2
         {
             if (Fecha.CompareTo(other.Fecha) > 0)
             {
-                return 1;
+                return -1;
             }
             else if (Fecha.CompareTo(other.Fecha) < 0)
             {
-                return -1;
+                return 1;
             }
             else
             {

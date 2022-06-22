@@ -384,15 +384,19 @@ namespace ObligatorioP2
         public List<Servicio> GetServiciosPorClienteEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
         {
             List<Servicio> ret = new List<Servicio>();
-            foreach (Servicio s in servicios)
+            if(fecha1 != null && fecha2 != null)
             {
-                if (id == s.Cliente.Id)
+                foreach (Servicio s in servicios)
                 {
-                    if (s.Fecha >= fecha1 && s.Fecha <= fecha2)
+                    if (id == s.Cliente.Id)
                     {
-                        ret.Add(s);
+                        if (s.Fecha >= fecha1 && s.Fecha <= fecha2)
+                        {
+                            ret.Add(s);
+                        }
                     }
                 }
+
             }
             return ret;
         }
@@ -503,23 +507,33 @@ namespace ObligatorioP2
         //---------------ALTA-------------
         //funcion que permite adquirir un servicio de tipo Local.
         //agrega a Mozo a la lista de personas.
-        public void AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
+        public bool AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
         {
             //si los datos son válidos, coincide el id de Cliente y se selecciona un Mozo que este disponible,
             //se da de alta el nuevo Servicio.
-
-            Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
-            servicios.Add(nuevo);
+            if (GetClientePorId(idCliente) is Cliente && GetMozoPorId(slcMozo) is Mozo && cantidadComensales>0)
+            {
+                Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
+                servicios.Add(nuevo);
+                return true;
+            }
+            return false;
         }
+        
         //funcion que permite adquirir un servicio de tipo Delivery.
-        public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
+        public bool AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
         {
+            if (GetClientePorId(idCliente) is Cliente && GetRepartidorPorId(slcRepartidor) is Repartidor && distancia > 0 && direccion!= null)
+            {
+                               Delivery nuevo = new Delivery(GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
+                servicios.Add(nuevo);
+                return true;
+            }
+            return false;
             //si los datos son válidos, coincide el id de Cliente y se selecciona un Repartidor que este disponible,
             //se da de alta el nuevo Servicio.
-            Delivery nuevo = new Delivery(GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
-            servicios.Add(nuevo);
         }
-
+        
 
         public Mozo AltaMozo(Mozo m) 
         {

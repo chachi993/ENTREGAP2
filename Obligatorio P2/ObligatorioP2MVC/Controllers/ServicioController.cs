@@ -26,7 +26,7 @@ namespace ObligatorioP2MVC.Controllers
                 List<Servicio> misServicios = s.GetServiciosPorCliente(idLogueado);
                 if (misServicios == null)
                 {
-                    ViewBag.msg = "No hay servicios";
+                    ViewBag.msgServicios = "No hay servicios";
                 }
                 return View(misServicios);
             }
@@ -50,7 +50,7 @@ namespace ObligatorioP2MVC.Controllers
                 List<Servicio> misServicios = s.GetServiciosPorClienteEntreFechas(idLogueado, f1, f2);
                 if (misServicios == null)
                 {
-                    ViewBag.msg = "No hay servicios";
+                    ViewBag.msgServicios = "No hay servicios";
                 }
                 return View(misServicios);
 
@@ -84,8 +84,18 @@ namespace ObligatorioP2MVC.Controllers
             {
 
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-                s.AltaDelivery(idLogueado, direccion, distancia, slcRepartidor);
-                return RedirectToAction("MisServicios", "Servicio");
+                if(s.AltaDelivery(idLogueado, direccion, distancia, slcRepartidor))
+                {
+                    return RedirectToAction("MisServicios", "Servicio");
+
+                }
+                else
+                {
+                    List<Repartidor> lr = s.GetRepartidores();
+                    ViewBag.Repartidores = lr;
+                    ViewBag.msg = "No se crea el delivery";
+                    return View();
+                }               
             }
             else
             {
@@ -118,13 +128,19 @@ namespace ObligatorioP2MVC.Controllers
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
 
-                s.AgregarPlato(id, slcPlato, cantidad );
-                return RedirectToAction("MisServicios", "Servicio" );
+                if(s.AgregarPlato(id, slcPlato, cantidad))
+                {
+                    return RedirectToAction("MisServicios", "Servicio" );
+                }
+                else
+                {
+                    return View();
+                }
+
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
+            return RedirectToAction("Index", "Home");
+            
 
         }
 
@@ -176,8 +192,17 @@ namespace ObligatorioP2MVC.Controllers
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-                s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales);
-                return RedirectToAction("MisServicios", "Servicio");
+                if(s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales))
+                {
+                    s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales);
+                    return RedirectToAction("MisServicios", "Servicio");
+
+                } else
+                {
+                    List<Mozo> lm = s.GetMozos();
+                    ViewBag.Mozos = lm;
+                    return View();
+                }
             }
             else
             {
@@ -191,6 +216,11 @@ namespace ObligatorioP2MVC.Controllers
 
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> servicios = s.GetServiciosMasCarosPorIdCliente(idLogueado);
+                if (servicios == null)
+                {
+                    ViewBag.msg = "No hay servicios";
+                }
+                      
                 return View(servicios);
             }
             else
@@ -239,6 +269,9 @@ namespace ObligatorioP2MVC.Controllers
 
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> misServicios = s.GetServiciosPorMozo(idLogueado);
+                
+                ViewBag.msgMozo = "No hay servicios";
+                
                 return View(misServicios);
             }
             else
@@ -260,6 +293,10 @@ namespace ObligatorioP2MVC.Controllers
                 {
                     int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                     List<Servicio> misServicios = s.GetServiciosLocalesPorMozoEntreFechas(idLogueado, f1, f2);
+                    if (misServicios == null)
+                    {
+                        ViewBag.msgMozo = "No hay servicios";
+                    }
                     return View(misServicios);
 
                 }
@@ -279,6 +316,10 @@ namespace ObligatorioP2MVC.Controllers
             {
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> servicios = s.GetServiciosPorRepartidorOrdenadosPorFecha(idLogueado);
+                if (servicios == null)
+                {
+                    ViewBag.msgRepartidor = "No hay servicios";
+                }
                 return View(servicios);
             }
             else
