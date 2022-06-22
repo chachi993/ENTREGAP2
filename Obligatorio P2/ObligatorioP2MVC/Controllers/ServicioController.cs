@@ -154,15 +154,17 @@ namespace ObligatorioP2MVC.Controllers
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
                 List<PlatoCantidad> misPlatos = s.GetPlatosCantidadPrServicio(Id);
+                if(misPlatos.Count().Equals(0))
+                {
+                    ViewBag.msg = "No hay platos";
+                }
                 return View(misPlatos);
             }
             else
             {
                 return RedirectToAction("Index", "Home");
             }
-
         }
         public IActionResult CerrarServicio(int id)
         {
