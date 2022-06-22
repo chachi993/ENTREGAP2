@@ -31,7 +31,10 @@ namespace ObligatorioP2
             Likes = 0;
         }
 
-
+        public void SumarLike()
+        {
+            Likes++;
+        }
 
         public bool EsValido()
         {

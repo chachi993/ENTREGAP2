@@ -40,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
-               
+
             </th>
         </tr>
     </thead>
@@ -65,10 +65,10 @@
                     @Html.ActionLink("Ver Platos", "VerPlatos", new { id = item.Id }) |
                     @if (item.Estado == "Abierto")
                     {
-                    @Html.ActionLink("Agregar Plato", "AgregarPlato", new { id = item.Id }) 
+                        @Html.ActionLink("Agregar Plato", "AgregarPlato", new { id = item.Id })
                         <span>|</span>
-               
-                     @Html.ActionLink("Cerrar Servicio", "CerrarServicio", new { id = item.Id });
+
+                        @Html.ActionLink("Cerrar Servicio", "CerrarServicio", new { id = item.Id });
                     }
 
                 </td>
@@ -76,3 +76,4 @@
         }
     </tbody>
 </table>
+<p>@ViewBag.msg</p>

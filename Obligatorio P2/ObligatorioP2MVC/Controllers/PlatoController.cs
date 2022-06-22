@@ -30,8 +30,7 @@ namespace ObligatorioP2MVC.Controllers
 
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-                List<Plato> listaPlatos = s.GetPlatosOrdenadosPorNombre(idLogueado);
+                List<Plato> listaPlatos = s.GetPlatosOrdenadosPorNombre();
                 return View(listaPlatos);
                 
             }

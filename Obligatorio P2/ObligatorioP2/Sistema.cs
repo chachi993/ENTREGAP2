@@ -23,6 +23,7 @@ namespace ObligatorioP2
         }
         private static Sistema instancia = null;
 
+
         public static Sistema GetInstancia()
         {
             if(instancia == null)
@@ -32,14 +33,10 @@ namespace ObligatorioP2
             return instancia;
         }
 
-        
-        public List<Servicio> GetServiciosPorClienteEntreFechas(int? idLogueado)
-        {
-            throw new NotImplementedException();
-        }
+        //-----------GET LISTAS---------------
 
         //métod que retorna una lista de clientes ordenados por un criterio.
-        public List<Cliente> GetClientesOrdenados() 
+        public List<Cliente> GetClientesOrdenados()
         {
             List<Cliente> clientesOrdenados = new List<Cliente>(); //creamos variable de tipo lista para los clientes ordenados.
             foreach (Persona p in personas)//recorremos la lista de personas. 
@@ -53,7 +50,6 @@ namespace ObligatorioP2
             clientesOrdenados.Sort(); //se ordena la lista mediante el uso del Sort.
             return clientesOrdenados; //devolvemos la lista ordenada.
         }
-
         //el método (al igual que GetClientesOrdenados) devuelve una lista de mozos, obtenida de la lista personas.
         public List<Mozo> GetMozos()
         {
@@ -68,7 +64,6 @@ namespace ObligatorioP2
             }
             return ret;
         }
-
         //el métod (al igual que GetClientesOrdenados) devuelve una lista de repartidores, obtenida de la lista personas.
         public List<Repartidor> GetRepartidores()
         {
@@ -84,6 +79,30 @@ namespace ObligatorioP2
 
             return ret;
         }
+        public List<Delivery> GetDeliveries()
+        //el método (similar que GetClientesOrdenados) devuelve una lista de deliveries, obtenida de la lista servicios.
+        {
+            List<Delivery> ret = new List<Delivery>();
+            foreach (Servicio s in servicios)
+            {
+                if (s is Delivery)
+                {
+                    Delivery aux = s as Delivery;
+                    ret.Add(aux);
+                }
+            }
+
+            return ret;
+        }
+        //retornamos la lista de platos.
+        public List<Plato> GetPlatos()
+        {
+            return platos;
+        }
+
+
+
+        //-------------GET INSTANCIA POR ID------------
 
         //Buscamos y obtenemos recorriendo la lista de personas un Cliente en especifico a traves de su id.
         public Cliente GetClientePorId(int? idCliente)
@@ -102,7 +121,6 @@ namespace ObligatorioP2
             
             return null;
         }
-
         //Buscamos y obtenemos un Servicio recorriendo la lista Servicio a traves de su id.
         public Servicio GetServicioPorId(int id)
         {
@@ -116,7 +134,6 @@ namespace ObligatorioP2
 
             return null;
         }
-
         //Buscamos y obtenemos un Cliente a traves del id ingresado por el usuario.
         public Cliente GetCliente(int? idCliente)
         {
@@ -134,7 +151,76 @@ namespace ObligatorioP2
 
             return null;
         }
+        //Buscamos y obtenemos un Mozo a partir de su id
+        public Mozo GetMozoPorId(int num)
+        {
+            Mozo ret = null;
+            List<Mozo> mozos = GetMozos();
 
+            foreach (Mozo m in mozos)
+            {
+                if (m.Id.Equals(num))
+                {
+                    ret = m;
+                }
+            }
+            return ret;
+        }
+        //metodo que retorna un Repartidos a partir de su id.
+        public Repartidor GetRepartidorPorId(int num)
+        {
+            Repartidor ret = null;
+            List<Repartidor> repartidores = GetRepartidores(); //creamos una lista de repartidores con GetRepartidores.
+
+            foreach (Repartidor r in repartidores)
+            {
+                if (r.Id.Equals(num)) //si el repartidor tiene el ID igual al argumento num, se retorna el objwto repartidor.
+                {
+                    ret = r;
+                }
+            }
+
+            return ret;
+        }
+        public Persona GetPersona(int idPersona)
+        {
+            foreach (Persona p in personas)
+            {
+                if (p.Id.Equals(idPersona))
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+        private Servicio GetServicioPorId(int? idServicio)
+        {
+            foreach (Servicio s in servicios)
+
+            {
+                if (s.Id.Equals(idServicio))
+                {
+                    return s;
+                }
+            }
+            return null;
+        }
+        private Plato GetPlatoPorId(int? idPlato)
+        {
+            foreach (Plato p in platos)
+
+            {
+                if (p.Id.Equals(idPlato))
+                {
+                    return p;
+                }
+            }
+            return null;
+        }
+
+
+
+        //--------------OPERACIONES------------
         //Damos por cerrado un Servicio siempre que este en estado "Abierto". 
         //Al cerrarlo cambia su estado a "Cerrado" y muestra el Precio Final de la compra.
         public void CerrarServicio(int? idServicio)
@@ -149,18 +235,87 @@ namespace ObligatorioP2
                 }
             }
         }
-
-        //funcion que permite adquirir un servicio de tipo Local.
-        //agrega a Mozo a la lista de personas.
-        public void AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
+        //metodo que permite al Cliente darle "like" a un plato una cantidad indefinida.
+        public void Likear(int id)
         {
-            //si los datos son válidos, coincide el id de Cliente y se selecciona un Mozo que este disponible,
-            //se da de alta el nuevo Servicio.
-            
-            Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
-            servicios.Add(nuevo);
+            foreach (Plato p in platos)
+            {
+
+                if (p.Id.Equals(id))
+                {
+                    p.SumarLike();
+                }
+            }
+        }
+        public bool NumeroFuncionarioExiste(int numero)
+        {
+            bool numExiste = false;
+            foreach (Persona m in personas) //se recorren las personas, si la persona es Mozo se hace una variable auxiliar de tipo Mozo.
+
+            {
+                if (m is Mozo)
+                {
+                    Mozo aux = m as Mozo;
+
+                    if (aux.NumeroFuncionario == numero) //se verifica si el numero de funcionario del mozo es igual al argumento.
+                    {
+                        numExiste = true;
+                    }
+
+                }
+            }
+
+            return numExiste;
+        }
+        // verifica si nombre usuario ya existe entre los usuarios
+        public bool UsuarioExiste(string user)
+        {
+            foreach (Usuario u in usuarios)
+            {
+                if (u.UserName == user)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool AgregarPlato(int? idServicio, int? idPlato, int cantidad)
+        {
+            if (idPlato != null && idServicio != null && cantidad > 0)
+            {
+
+                Plato p = GetPlatoPorId(idPlato);
+                PlatoCantidad pc = new PlatoCantidad(p, cantidad);
+                Servicio s = GetServicioPorId(idServicio);
+                s.AgregarPlato(pc);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        public Persona ValidarDatosLogin(string user, string pass)
+        {
+            Persona p = null;
+            foreach (Usuario u in usuarios)
+            {
+                if (u.UserName.Equals(user) && u.Password.Equals(pass))
+                {
+                    p = GetPersona(u.IdPersona);
+                }
+            }
+            return p;
         }
 
+
+
+
+
+
+
+        //----------------GET LISTA SERVICIO FILTRADA----------
         //metodo que devuelve los servicios mas caros que consumio el Cliente.
         //si hay empatados, muestra todos los empatados.
         public List<Servicio> GetServiciosMasCarosPorIdCliente(int? idCliente)
@@ -186,7 +341,6 @@ namespace ObligatorioP2
             }
             return ret;
         }
-
         //metodo que devuelve dado el nombre de un plato, todos los servicios de ese Cliente que 
         //pidio ese plato al menos una vez.
         public List<Servicio> GetServiciosSegunNombreDePlato(string nombre, int? idlogueado)
@@ -202,106 +356,10 @@ namespace ObligatorioP2
             }
             return ret;
         }
-
-        //Buscamos y obtenemos un Mozo a partir de su id
-        public Mozo GetMozoPorId(int num)
+        public List<Servicio> GetServiciosPorClienteEntreFechas(int? idLogueado)
         {
-            Mozo ret = null;
-            List<Mozo> mozos = GetMozos();
-
-            foreach (Mozo m in mozos)
-            {
-                if (m.Id.Equals(num))
-                {
-                    ret = m;
-                }
-            }
-            return ret;
+            throw new NotImplementedException();
         }
-
-        
-        public List<PlatoCantidad> GetPlatosCantidadPrServicio(int id)
-        {
-            Servicio s = GetServicioPorId(id);
-            List<PlatoCantidad> pc = s.Platos;
-            return pc;
-        }
-
-        //funcion que permite adquirir un servicio de tipo Delivery.
-        //Agrega ese servicio a la lista de servicios del Cliente.
-
-        public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
-        {
-            //si los datos son válidos, coincide el id de Cliente y se selecciona un Repartidor que este disponible,
-            //se da de alta el nuevo Servicio.
-            Delivery nuevo = new Delivery (GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
-            servicios.Add(nuevo);
-        }
-
-        public List<Delivery> GetDeliveries()
-        //el método (similar que GetClientesOrdenados) devuelve una lista de deliveries, obtenida de la lista servicios.
-        {
-            List<Delivery> ret = new List<Delivery>();
-            foreach (Servicio s in servicios)
-            {
-                if (s is Delivery)
-                {
-                    Delivery aux = s as Delivery;
-                    ret.Add(aux);
-                }
-            }
-
-            return ret;
-        }
-
-        //retornamos la lista de platos.
-        public List<Plato> GetPlatos()
-        {
-            return platos;
-        }
-
-        //retornamos la lista de platos ordenanos por nombre
-        public List<Plato> GetPlatosOrdenadosPorNombre(int? id)
-        {
-            platos.Sort();
-            return platos;
-        }
-        public List<Plato> GetPlatosOrdenadosPorNombre()
-        {
-            platos.Sort();
-            return platos;
-        }
-
-        //metodo que retorna un Repartidos a partir de su id.
-        public Repartidor GetRepartidorPorId(int num) 
-        {
-            Repartidor ret = null; 
-            List<Repartidor> repartidores = GetRepartidores(); //creamos una lista de repartidores con GetRepartidores.
-
-            foreach (Repartidor r in repartidores) 
-            {
-                if(r.Id.Equals(num)) //si el repartidor tiene el ID igual al argumento num, se retorna el objwto repartidor.
-                {
-                    ret = r;
-                }
-            }
-
-            return ret;
-        }
-        
-        //metodo que permite al Cliente darle "like" a un plato una cantidad indefinida.
-        public void Likear(int id)
-        {
-            foreach (Plato p in platos)
-            {
-
-                if (p.Id.Equals(id))
-                {
-                    p.Likes++;
-                }
-            }
-        }
-
         //retorna una lista de servicios segun el Repartidor dado dos fechas
         public List<Delivery> GetServiciosPorRepartidorEntreFechas(Repartidor repartidor, DateTime fecha1, DateTime fecha2)
         {
@@ -311,7 +369,7 @@ namespace ObligatorioP2
             //brindado: se agrega el objeto delivery a la lista de retorno.
             foreach (Delivery d in deliverys)
             {
-                if (repartidor == d.Repartidor) 
+                if (repartidor == d.Repartidor)
                 {
                     if (d.Fecha >= fecha1 && d.Fecha <= fecha2)
                     {
@@ -322,7 +380,6 @@ namespace ObligatorioP2
 
             return ret;
         }
-
         //metodo que retorna los servicios del Cliente que fueron realizados entre dos fechas.
         public List<Servicio> GetServiciosPorClienteEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
         {
@@ -339,8 +396,8 @@ namespace ObligatorioP2
             }
             return ret;
         }
-
         //metodo que retorna los servicios del Cliente
+        //Agrega ese servicio a la lista de servicios del Cliente.
         public List<Servicio> GetServiciosPorCliente(int? id)
         {
             List<Servicio> ret = new List<Servicio>();
@@ -348,9 +405,9 @@ namespace ObligatorioP2
             {
                 if (id == s.Cliente.Id)
                 {
-                   
+
                     ret.Add(s);
-                    
+
                 }
             }
             return ret;
@@ -360,7 +417,7 @@ namespace ObligatorioP2
             List<Servicio> ret = new List<Servicio>();
             foreach (Servicio s in servicios)
             {
-                if(s is Local)
+                if (s is Local)
                 {
                     Local aux = s as Local;
                     if (id == aux.Mozo.Id)
@@ -372,19 +429,97 @@ namespace ObligatorioP2
             }
             return ret;
         }
+        public List<Servicio> GetServiciosLocalesPorMozoEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
+        {
+            List<Servicio> ret = new List<Servicio>();
+            foreach (Persona p in personas)
+            {
+                if (p is Mozo && p.Id == id)
+                {
+                    Mozo aux = p as Mozo;
+                    foreach (Servicio s in servicios)
+                    {
+                        if (s is Local)
+                        {
+                            Local aux2 = s as Local;
+                            if (aux2.Fecha >= fecha1 && aux2.Fecha <= fecha2 && aux2.Mozo == aux)
+                            {
+                                ret.Add(aux2);
+                            }
+                        }
+                    }
+                }
+            }
+            return ret;
+        }
+        public List<Servicio> GetServiciosPorRepartidorOrdenadosPorFecha(int? id)
+        {
+            List<Servicio> serviciosOrdenados = new List<Servicio>();
+            foreach (Persona p in personas)
+            {
+                if (p is Repartidor && p.Id == id)
+                {
+                    Repartidor aux = p as Repartidor;
+                    foreach (Servicio s in servicios)
+                    {
+                        if (s is Delivery)
+                        {
+                            Delivery d = s as Delivery;
+                            if (d.Repartidor.Equals(aux))
+                            {
+                                serviciosOrdenados.Add(s);
+                            }
+                        }
+                    }
+                }
+            }
+            serviciosOrdenados.Sort();
+            return serviciosOrdenados;
+        }
 
 
 
-        //public bool ModificarPrecioMinimoPlato(double precioNuevo) 
-        //{
-        //    if (precioNuevo != Plato.PrecioMinimo && precioNuevo>=0) //si el precio nuevo es validado, se cambia el precio minimo de la clase Plato.
-        //    {
-        //    Plato.PrecioMinimo = precioNuevo;
-        //    return true;
 
-        //    }
-        //    return false;
-        //}
+        //----------------GET LISTA FILTRADA----------
+
+        public List<PlatoCantidad> GetPlatosCantidadPrServicio(int id)
+        {
+            Servicio s = GetServicioPorId(id);
+            List<PlatoCantidad> pc = s.Platos;
+            return pc;
+        }
+
+        //retornamos la lista de platos ordenanos por nombre
+        public List<Plato> GetPlatosOrdenadosPorNombre()
+        {
+            platos.Sort();
+            return platos;
+        }
+
+
+
+
+
+        //---------------ALTA-------------
+        //funcion que permite adquirir un servicio de tipo Local.
+        //agrega a Mozo a la lista de personas.
+        public void AltaLocal(int? idCliente, int numeroMesa, int slcMozo, int cantidadComensales)
+        {
+            //si los datos son válidos, coincide el id de Cliente y se selecciona un Mozo que este disponible,
+            //se da de alta el nuevo Servicio.
+
+            Local nuevo = new Local(GetClientePorId(idCliente), DateTime.Now, numeroMesa, GetMozoPorId(slcMozo), cantidadComensales);
+            servicios.Add(nuevo);
+        }
+        //funcion que permite adquirir un servicio de tipo Delivery.
+        public void AltaDelivery(int? idCliente, string direccion, int distancia, int slcRepartidor)
+        {
+            //si los datos son válidos, coincide el id de Cliente y se selecciona un Repartidor que este disponible,
+            //se da de alta el nuevo Servicio.
+            Delivery nuevo = new Delivery(GetClientePorId(idCliente), DateTime.Now, direccion, GetRepartidorPorId(slcRepartidor), distancia);
+            servicios.Add(nuevo);
+        }
+
 
         public Mozo AltaMozo(Mozo m) 
         {
@@ -425,16 +560,36 @@ namespace ObligatorioP2
             }
             return null;
         }
-
-        //ALTA CLIENTE NUEVA
+        //ALTA CLIENTE como usuario
         public Cliente AltaCliente(Cliente c, string username, string password)
         {
-            personas.Add(c);
-            Usuario nuevo = new Usuario(c, username, password);
-            usuarios.Add(nuevo);
-            return c;
+            if (c.EsValido() && !UsuarioExiste(username))
+            {
+                personas.Add(c);
+                Usuario nuevo = new Usuario(c, username, password);
+                usuarios.Add(nuevo);
+                return c;
+            }
+            else
+            {
+                return null;
+            }
         }
-
+        public Cliente AltaCliente(string nombre, string apellido, string email, string username, string password)
+        {
+            Cliente c = new Cliente(nombre, apellido, email, password);
+            if (c.EsValido() && !UsuarioExiste(username))
+            {
+                personas.Add(c);
+                Usuario nuevo = new Usuario(c, username, password);
+                usuarios.Add(nuevo);
+                return c;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public Cliente AltaCliente(Cliente c)
         {
             if (c.EsValido())
@@ -448,156 +603,48 @@ namespace ObligatorioP2
         }
         public Mozo AltaMozoComoUsuario(Mozo m, string username, string password)
         {
-            personas.Add(m);
-            Usuario nuevo = new Usuario(m, username, password);
-            usuarios.Add(nuevo);
-            return m;
+            if (m.EsValido() && !UsuarioExiste(username))
+            {
+                personas.Add(m);
+                Usuario nuevo = new Usuario(m, username, password);
+                usuarios.Add(nuevo);
+                return m;
+            }
+            else
+            {
+                return null;
+            }
+            
         }
         public Repartidor AltaRepartidorComoUsuario(Repartidor r, string username, string password)
         {
-            personas.Add(r);
-            Usuario nuevo = new Usuario(r, username, password);
-            usuarios.Add(nuevo);
-            return r;
-        }
-
-        public Persona ValidarDatosLogin(string user, string pass)
-        {
-            Persona p = null;
-            foreach(Usuario u in usuarios)
+            
+            if (r.EsValido() && !UsuarioExiste(username))
             {
-                if(u.UserName.Equals(user) && u.Password.Equals(pass))
-                {
-                    p = GetPersona(u.IdPersona);
-                }
+                personas.Add(r);
+                Usuario nuevo = new Usuario(r, username, password);
+                usuarios.Add(nuevo);
+                return r;
             }
-            return p;
-        }
-
-        public Persona GetPersona(int idPersona)
-        {
-            foreach(Persona p in personas)
+            else
             {
-                if (p.Id.Equals(idPersona))
-                {
-                    return p;
-                }
-            }
-            return null;
-        }
-
-
-        public bool NumeroFuncionarioExiste(int numero) 
-        {
-            bool numExiste = false;
-            foreach (Persona m in personas) //se recorren las personas, si la persona es Mozo se hace una variable auxiliar de tipo Mozo.
-                                             
-            {
-                if (m is Mozo)
-                {
-                    Mozo aux = m as Mozo;
-
-                    if (aux.NumeroFuncionario == numero) //se verifica si el numero de funcionario del mozo es igual al argumento.
-                    {
-                        numExiste = true;
-                    }
-
-                }
-            }
-
-            return numExiste;
-        }
-
-        public bool AgregarPlato(int? idServicio, int? idPlato, int cantidad)
-        {
-            if (idPlato != null && idServicio != null && cantidad > 0){
-
-                Plato p = GetPlatoPorId(idPlato);
-                PlatoCantidad pc = new PlatoCantidad(p, cantidad);
-                Servicio s = GetServicioPorId(idServicio);
-                s.AgregarPlato(pc);
-                return true;
-            } else
-            {
-                return false;
+                return null;
             }
 
         }
 
-        private Servicio GetServicioPorId(int? idServicio)
-        {
-            foreach (Servicio s in servicios)
 
-            {
-                if (s.Id.Equals(idServicio))
-                {
-                    return s;
-                }
-            }
-            return null;
-        }
 
-  
-        private Plato GetPlatoPorId(int? idPlato)
-        {
-            foreach (Plato p in platos)
+        //public bool ModificarPrecioMinimoPlato(double precioNuevo) 
+        //{
+        //    if (precioNuevo != Plato.PrecioMinimo && precioNuevo>=0) //si el precio nuevo es validado, se cambia el precio minimo de la clase Plato.
+        //    {
+        //    Plato.PrecioMinimo = precioNuevo;
+        //    return true;
 
-            {
-                if (p.Id.Equals(idPlato))
-                {
-                    return p;
-                }
-            }
-            return null;
-        }
-        public List<Servicio> GetServiciosLocalesPorMozoEntreFechas(int? id, DateTime fecha1, DateTime fecha2)
-        {
-            List<Servicio> ret = new List<Servicio>();
-            foreach (Persona p in personas)
-            {
-                if (p is Mozo && p.Id == id)
-                {
-                    Mozo aux = p as Mozo;
-                        foreach (Servicio s in servicios)
-                        {
-                            if (s is Local)
-                            {
-                                Local aux2 = s as Local;
-                                if (aux2.Fecha >= fecha1 && aux2.Fecha <= fecha2 && aux2.Mozo == aux)
-                                {
-                                    ret.Add(aux2);
-                                }
-                            }
-                        }
-                }
-            }
-              return ret;
-        }
-        public List<Servicio> GetServiciosPorRepartidorOrdenadosPorFecha(int? id)
-        {
-            List<Servicio> serviciosOrdenados = new List<Servicio>();
-            foreach (Persona p in personas)
-            {
-                if (p is Repartidor && p.Id == id)
-                {
-                    Repartidor aux = p as Repartidor;
-                        foreach (Servicio s in servicios)
-                        {
-                            if (s is Delivery)
-                            {
-                                Delivery d = s as Delivery;
-                                if (d.Repartidor.Equals(aux))
-                                {
-                                    serviciosOrdenados.Add(s);
-                                }
-                            }
-                        }
-                }
-            }
-             serviciosOrdenados.Sort();
-             return serviciosOrdenados;
-        }
-
+        //    }
+        //    return false;
+        //}
 
         private void PreCarga()
         {
@@ -664,17 +711,7 @@ namespace ObligatorioP2
             servicios.Add(l4);
             Local l5 = new Local(c5, DateTime.Parse("2021-08-23"), 4, m2, 4);
             servicios.Add(l5);
-            CerrarServicio(d1.Id);
-            CerrarServicio(d2.Id);
-            CerrarServicio(d3.Id);
-            CerrarServicio(d4.Id);
-            CerrarServicio(d5.Id);
-            CerrarServicio(l1.Id);
-            CerrarServicio(l2.Id);
-            CerrarServicio(l3.Id);
-            CerrarServicio(l4.Id);
-            CerrarServicio(l5.Id);
-
+            
 
             Plato p1 = new Plato("Milanesa", 345);
             AltaPlato(p1); //llamamos al métod AltaPlato para validr y agregar los platos al sistema.
@@ -726,6 +763,17 @@ namespace ObligatorioP2
             AgregarPlato(8, 1, 3);
             AgregarPlato(9, 0, 4);
             AgregarPlato(0, 9, 3);
+
+            CerrarServicio(d1.Id);
+            CerrarServicio(d2.Id);
+            CerrarServicio(d3.Id);
+            CerrarServicio(d4.Id);
+            CerrarServicio(d5.Id);
+            CerrarServicio(l1.Id);
+            CerrarServicio(l2.Id);
+            CerrarServicio(l3.Id);
+            CerrarServicio(l4.Id);
+            CerrarServicio(l5.Id);
 
         }
     }

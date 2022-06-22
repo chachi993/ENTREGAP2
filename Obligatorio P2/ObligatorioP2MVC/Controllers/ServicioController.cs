@@ -24,6 +24,10 @@ namespace ObligatorioP2MVC.Controllers
 
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> misServicios = s.GetServiciosPorCliente(idLogueado);
+                if (misServicios == null)
+                {
+                    ViewBag.msg = "No hay servicios";
+                }
                 return View(misServicios);
             }
             else
@@ -41,19 +45,15 @@ namespace ObligatorioP2MVC.Controllers
             }
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-                if(f1 != null && f2 != null) { 
 
-                    int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-                    List<Servicio> misServicios = s.GetServiciosPorClienteEntreFechas(idLogueado, f1, f2);
-                    return View(misServicios);
-
-                }
-                else
+                int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                List<Servicio> misServicios = s.GetServiciosPorClienteEntreFechas(idLogueado, f1, f2);
+                if (misServicios == null)
                 {
-                    int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
-                    List<Servicio> misServicios = s.GetServiciosPorClienteEntreFechas(idLogueado, new DateTime (01-01-1900), new DateTime (01-01-2023));
-                    return View(misServicios);
+                    ViewBag.msg = "No hay servicios";
                 }
+                return View(misServicios);
+
             }
             else
             {
@@ -204,6 +204,7 @@ namespace ObligatorioP2MVC.Controllers
             {
                 List<Plato> lp = s.GetPlatos();
                 List<Servicio> servicios = new List<Servicio>();
+
                 ViewBag.Platos = lp;
                 return View(servicios);
             }
@@ -221,6 +222,8 @@ namespace ObligatorioP2MVC.Controllers
             {
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> servicios= s.GetServiciosSegunNombreDePlato(slcPlato, idLogueado);
+                List<Plato> lp = s.GetPlatos();
+                ViewBag.Platos = lp;
                 return View(servicios);
             }
             else
@@ -228,6 +231,7 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
         public IActionResult ServiciosLocalesAtendioMozo()
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Mozo")

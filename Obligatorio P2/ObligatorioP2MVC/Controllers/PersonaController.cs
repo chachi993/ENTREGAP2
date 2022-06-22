@@ -21,11 +21,12 @@ namespace ObligatorioP2MVC.Controllers
         }
         
         [HttpPost]
-        public IActionResult AltaCliente(Cliente c, string user, string pass )
+        public IActionResult AltaCliente(string nombre, string apellido, string email, string user, string pass )
         {
-            if(s.AltaCliente(c, user, pass) != null){
+            if(s.AltaCliente(nombre, apellido, email, user, pass) != null){
 
                 ViewBag.msg = "Alta Correcta";
+                return RedirectToAction("Login", "Home");
             }
             else
             {

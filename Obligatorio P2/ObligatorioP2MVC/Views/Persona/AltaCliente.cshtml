@@ -13,23 +13,20 @@
         <form asp-action="AltaCliente">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <label class="control-label">Nombre</label>
+                <input type="text" name="nombre" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Apellido" class="control-label"></label>
-                <input asp-for="Apellido" class="form-control" />
-                <span asp-validation-for="Apellido" class="text-danger"></span>
+                <label class="control-label">Apellido</label>
+                <input type="text" name="apellido" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label class="control-label">Email</label>
+                <input type="email" name="email" class="form-control" />
             </div>
 
             <div class="form-group">
-                <label asp-for="Email" class="control-label">Username</label>
+                <label class="control-label">Username</label>
                 <input type="text" name="user" class="form-control" />
             </div>
             <div class="form-group">
@@ -42,7 +39,7 @@
         </form>
     </div>
 </div>
-<p>@ViewBag</p>
+<p>@ViewBag.msg</p>
 
 <div>
     <a asp-action="Index">Back to List</a>
