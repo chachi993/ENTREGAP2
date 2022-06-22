@@ -73,8 +73,7 @@ namespace ObligatorioP2MVC.Controllers
             else
             {
                 return RedirectToAction("Index", "Home");
-            }
-            
+            }   
         }
 
         [HttpPost]
@@ -82,12 +81,10 @@ namespace ObligatorioP2MVC.Controllers
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 if(s.AltaDelivery(idLogueado, direccion, distancia, slcRepartidor))
                 {
                     return RedirectToAction("MisServicios", "Servicio");
-
                 }
                 else
                 {
@@ -202,9 +199,7 @@ namespace ObligatorioP2MVC.Controllers
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 if(s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales))
                 {
-                    s.AltaLocal(idLogueado, numeroMesa, slcMozo, cantidadComensales);
                     return RedirectToAction("MisServicios", "Servicio");
-
                 } else
                 {
                     List<Mozo> lm = s.GetMozos();

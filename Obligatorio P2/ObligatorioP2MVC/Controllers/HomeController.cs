@@ -13,7 +13,7 @@ namespace ObligatorioP2MVC.Controllers
 {
     public class HomeController : Controller
     {
-        Sistema s = Sistema.GetInstancia();
+        Sistema s = Sistema.GetInstancia(); //nos permite hacer uso del singleton
 
         private readonly ILogger<HomeController> _logger;
 
@@ -22,7 +22,7 @@ namespace ObligatorioP2MVC.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() //muestra la vista inicial de la pagina
         {
             int? logueadoId = HttpContext.Session.GetInt32("LogueadoId");
             
@@ -48,19 +48,18 @@ namespace ObligatorioP2MVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Login()
+        public IActionResult Login() //nos permite retornar a la vista cuando se hace login
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(string username, string password) //
         {
             Persona login = s.ValidarDatosLogin(username, password);
             string rol; 
             if(login != null)
             {
-
                 if(login is Cliente)
                 {
                     rol = "Cliente";
@@ -73,7 +72,6 @@ namespace ObligatorioP2MVC.Controllers
                 {
                     rol = "Mozo";
                 }
-
                 HttpContext.Session.SetInt32("LogueadoId", login.Id);
                 HttpContext.Session.SetString("LogueadoRol", rol);
 
