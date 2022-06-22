@@ -11,13 +11,13 @@ namespace ObligatorioP2
         {
 
             
-            Sistema s = Sistema.GetInstancia(); //creamos la instancia de Sistema
+            Sistema s = Sistema.GetInstancia(); //garantiza la existencia de una sola instancia de una clase Sistema
 
-            int op = -1; //variable op = -1 para que entre en el while.
-            while (op != 0) //si presionamos 0, sale del programa.
+            int op = -1; //variable op = -1 para que entre en el while
+            while (op != 0) //si presionamos 0, sale del programa
             {
-                MostrarMenu(); //métod que muestra en consola las opciones de Menu.
-                op = Int32.Parse(Console.ReadLine()); //lee la opcion del menu que selecciona el usuario.
+                MostrarMenu(); //método que muestra en consola las opciones de Menu
+                op = Int32.Parse(Console.ReadLine()); //lee la opcion del menu que selecciona el usuario
 
                 switch (op) 
                 {
@@ -26,10 +26,10 @@ namespace ObligatorioP2
 
                         List<Plato> listaPlatos = s.GetPlatos(); //creamos la lista de platos llamando al métod en System
 
-                        if (listaPlatos.Count > 0)
+                        if (listaPlatos.Count > 0) //si la lista es mayor a cero, entonces hay lista de platos
                         {
 
-                            foreach (Plato p in listaPlatos)//se recorren tods los platos para mostrarlos en consola.
+                            foreach (Plato p in listaPlatos)//se recorren tods los platos para mostrarlos en consola
                             {
                                 Console.WriteLine(p);
                             }
@@ -38,15 +38,11 @@ namespace ObligatorioP2
                         {
                             Console.WriteLine("No hay registros");
                         }
-
-
-                       
                         Console.ReadKey();
                         break;
 
                     case 2:
-
-                        List<Cliente> ListaOrdenada = s.GetClientesOrdenados(); //creamos la lista ordenada de clientes llamando al métod en System
+                        List<Cliente> ListaOrdenada = s.GetClientesOrdenados(); //creamos la lista ordenada de clientes llamando al método en System
 
                         if (ListaOrdenada.Count > 0)
                         {
@@ -64,9 +60,8 @@ namespace ObligatorioP2
                         Console.ReadKey();
                         break;
 
-                    case 3:                                       
-                        
-                        //almacenamos en variables el ID del Repartidor y dos fechas entre las que se buscan servicios de delivery.
+                    case 3: 
+                        //almacenamos en variables el ID del Repartidor y dos fechas entre las que se buscan servicios de delivery
                         Console.WriteLine("Ingrese ID del Repartidor"); 
                         int num = Int32.Parse(Console.ReadLine()); 
 
@@ -77,13 +72,11 @@ namespace ObligatorioP2
                         DateTime fecha2 = DateTime.Parse(Console.ReadLine());
 
 
-
                         List<Delivery> listaDeliverys = s.GetServiciosPorRepartidorEntreFechas(s.GetRepartidorPorId(num), fecha1, fecha2);
-                        //creamos la lista de deliverys llamando al métod en System
+                        //creamos la lista de deliverys llamando al método en System
 
                         if (listaDeliverys.Count > 0)
                         {
-
                             foreach (Delivery d in listaDeliverys)
                             {
                                 Console.WriteLine(d.ToString());
@@ -94,12 +87,9 @@ namespace ObligatorioP2
                             Console.WriteLine("No hay registros");
                         }
                         Console.ReadKey();
-
-
                         break;
 
                     case 4:
-                            
                         double precioMinimoActual = Plato.PrecioMinimo; //mostramos al usuario cual es el precio minimo actual del plato.
                         Console.WriteLine($"El precio mínimo actual es: {precioMinimoActual}");
 
@@ -138,24 +128,18 @@ namespace ObligatorioP2
                         if (s.AltaMozo(m) != null) //si se cumple el AltaMozo, este se muestra en la pantalla.
                         {
                             Console.WriteLine($"El nuevo mozo es: {m}");
-
                         }
                         else
                         {
                             Console.WriteLine("El mozo no se puede registrar - verifique que los campos se hayan completado o cambie el número de funcionario");
                         }
                         Console.ReadKey();
-
-
                         break;
-
                 }
-
             }
             if (op == 0)
             {
-                Console.Clear(); //cerramos la consola presionando 0.
-                
+                Console.Clear(); //cerramos la consola presionando 0.   
             }
         }
         private static void MostrarMenu()//métod para mostrar Menu en pantalla.

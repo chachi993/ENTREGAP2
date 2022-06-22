@@ -19,9 +19,10 @@
         {
             
         }
-
+        //los siguientes datos nos permiten que se pueda visualizar los contenidos que se van a desplegar en otras vistas
+         //acuerdo al rol de cada una de las usuarios, asi como que se pueda hacer el bindeo entre cada uno de los parametros
+         //y su representacion en el usuario
         public Usuario (Cliente c, string user, string password) {
-            
             UserName = user;
             Password = password;
             Rol = "Cliente";
@@ -29,7 +30,6 @@
         }
         public Usuario(Mozo m, string user, string password)
         {
-
             UserName = user;
             Password = password;
             Rol = "Mozo";
@@ -37,13 +37,10 @@
         }
         public Usuario(Repartidor r, string user, string password)
         {
-
             UserName = user;
             Password = password;
             Rol = "Repartidor";
             IdPersona = r.Id;
-        }
-
-        
+        } 
     }
 }

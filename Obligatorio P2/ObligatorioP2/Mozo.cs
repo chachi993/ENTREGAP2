@@ -30,20 +30,20 @@ namespace ObligatorioP2
             {
                 esValido = true;
 
-                for (int i = 0; i < Nombre.Length; i++)//valida que nombre no contenga números.
+                for (int i = 0; i < Nombre.Length; i++)//valida que nombre no contenga números
                                                        
                 {
-                    char caracter = Nombre[i];      //busca en los caracteres del nombre si existe o no un número.
+                    char caracter = Nombre[i];      //busca en los caracteres del nombre si existe o no un número
                     if (Char.IsNumber(caracter))
                     {
                         esValido = false;
                     }
                 }
 
-                for (int i = 0; i < Apellido.Length; i++)//valida que apellido no contenga números.
+                for (int i = 0; i < Apellido.Length; i++)//valida que apellido no contenga números
                                                          
                 {
-                    char caracter2 = Apellido[i]; //busca en los caracteres del apellido si existe o no un número.
+                    char caracter2 = Apellido[i]; //busca en los caracteres del apellido si existe o no un número
                     if (Char.IsNumber(caracter2))
                     {
                         esValido = false;
@@ -55,10 +55,11 @@ namespace ObligatorioP2
             return esValido;
         }
 
-        public override string ToString()  //función que retorna un objeto en formato string, y lo representa como una cadena de caracteres.
+        public override string ToString()  //función que retorna un objeto en formato string, y lo representa como una cadena de caracteres
         {
 
-            return $"{Apellido}, {Nombre}. Su número de funcionario es: {NumeroFuncionario}";   //muestra en la consola el Apellido, el Nombre y el Número de Funcionario.
+            return $"{Apellido}, {Nombre}. Su número de funcionario es: {NumeroFuncionario}";   //muestra en la consola el Apellido,
+                                                                                                //el Nombre y el Número de Funcionario
 
         }
     }

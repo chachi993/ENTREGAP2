@@ -4,25 +4,16 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ObligatorioP2
 {
-    public abstract class Servicio: IComparable<Servicio>  // si existe una instancia de servicio, ejemplo take away, no seria abstract.
+    public abstract class Servicio: IComparable<Servicio>  // si existe una instancia de servicio, ejemplo take away, no seria abstract
     {
-
-        // creamos las instancias que tienen en común todas las clases hijas de clase Servicio.
+        // creamos las instancias que tienen en común todas las clases hijas de clase Servicio
         public int Id { get; set; }
-
         public static int UltimoId { get; set; }
-
         public Cliente Cliente { get; set; }
-
         public List<PlatoCantidad> Platos = new List<PlatoCantidad>();
-
         public DateTime Fecha { get; set; }
-
         public double PrecioFinal { get; set; } = 0;
-
         public string Estado { get; set; } //darle true al darle alta
-
-
 
         public Servicio()
         {
