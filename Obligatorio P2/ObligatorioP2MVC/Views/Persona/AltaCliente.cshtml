@@ -10,24 +10,23 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AltaCliente">
+        <form method="post" id="formAlta" asp-action="AltaCliente">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label class="control-label">Nombre</label>
-                <input type="text" name="nombre" class="form-control" />
+                <label asp-for="Nombre" class="control-label">Nombre</label>
+                <input asp-for="Nombre" id="txtNombre" type="text" name="nombre" class="form-control" />
             </div>
             <div class="form-group">
-                <label class="control-label">Apellido</label>
-                <input type="text" name="apellido" class="form-control" />
+                <label asp-for="Apellido" class="control-label">Apellido</label>
+                <input asp-for="Apellido" id="txtApellido" type="text" name="apellido" class="form-control" />
             </div>
             <div class="form-group">
-                <label class="control-label">Email</label>
-                <input type="email" name="email" class="form-control" />
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" id="txtEmail" type="email" name="email" class="form-control" />
             </div>
-
             <div class="form-group">
                 <label class="control-label">Username</label>
-                <input type="text" name="user" class="form-control" />
+                <input type="text" id="txtUsername"  name="user" class="form-control" />
             </div>
             <div class="form-group">
                 <label class="control-label">Password</label>

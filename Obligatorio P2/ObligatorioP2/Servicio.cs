@@ -71,7 +71,7 @@ namespace ObligatorioP2
         {
             Platos.Add(pc);
         }
-        public virtual int CompareTo([AllowNull] Servicio other)
+        public int CompareTo([AllowNull] Servicio other)
         {
             if (Fecha.CompareTo(other.Fecha) > 0)
             {
