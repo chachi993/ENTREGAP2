@@ -67,7 +67,7 @@
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Logout">Cerrar Sesión</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" onclick="confirmaLogout()" asp-action="Logout">Cerrar Sesión</a>
                             </li>
 
                         }
@@ -87,6 +87,18 @@
             &copy; 2022 - ObligatorioP2MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <script>
+        function confirmaLogout() {
+            let cierraSesion = confirm("¿Seguro que quiere salir?");
+            if (cierraSesion) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

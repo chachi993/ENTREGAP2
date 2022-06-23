@@ -98,7 +98,6 @@ namespace ObligatorioP2MVC.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
         }
 
         public IActionResult AgregarPlato(int Id)
@@ -116,7 +115,6 @@ namespace ObligatorioP2MVC.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
         }
 
         [HttpPost]
@@ -124,7 +122,6 @@ namespace ObligatorioP2MVC.Controllers
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
                 if(s.AgregarPlato(id, slcPlato, cantidad))
                 {
                     return RedirectToAction("MisServicios", "Servicio" );
@@ -139,12 +136,8 @@ namespace ObligatorioP2MVC.Controllers
                     ViewBag.msg = "Error - no se agrega plato";
                     return View();
                 }
-
             }
-            
             return RedirectToAction("Index", "Home");
-            
-
         }
 
         public IActionResult VerPlatos(int Id)
