@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace ObligatorioP2MVC.Controllers
 {
+
     public class ServicioController : Controller
     {
+        //instancia de sitema (singleton)
         Sistema s = Sistema.GetInstancia();
 
         public IActionResult Index()
@@ -17,13 +19,17 @@ namespace ObligatorioP2MVC.Controllers
             return View();
         }
 
+        //lista de los servicios del cliente
         public IActionResult MisServicios()
         {
+            //solo entra cliente
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
+                //obtenemos id del session
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
+                //creamos lista de sus servicios por id del cliente
                 List<Servicio> misServicios = s.GetServiciosPorCliente(idLogueado);
+                //si la lista está vacía envía un mensaje de error
                 if (misServicios.Count().Equals(0))
                 {
                     ViewBag.msgServicios = "No hay servicios";
@@ -35,20 +41,20 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        //al llenar formulario de fechas se hace método post
         [HttpPost]
         public IActionResult MisServicios(DateTime f1, DateTime f2)
         {
             if (HttpContext.Session.GetInt32("LogueadoId") == null)
             {
                 return RedirectToAction("Index", "Home");
-            }
+            } //solo entra siendo cliente
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
+                //usa el id logeuado y las fechas para filtrar la lista
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> misServicios = s.GetServiciosPorClienteEntreFechas(idLogueado, f1, f2);
-                if (misServicios.Count().Equals(0))
+                if (misServicios.Count().Equals(0)) //si la lista está vacía tira un error
                 {
                     ViewBag.msgServicios = "No hay servicios";
                 }
@@ -61,12 +67,13 @@ namespace ObligatorioP2MVC.Controllers
             }
         }
 
+        //metodo para subir un delivery
         public IActionResult AltaDelivery()
-        {
+        {//solo para cliente
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
                 List<Repartidor> lr = s.GetRepartidores();
-
+                //pasamos la lista de repartidores para seleccionar uno para hacer el alta
                 ViewBag.Repartidores = lr;
                 return View();
             }
@@ -75,7 +82,7 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }   
         }
-
+        //si el servicio no se puede hacer se vuelve a cargar la vista con un mensaje de error
         [HttpPost]
         public IActionResult AltaDelivery(string direccion, int distancia, int slcRepartidor)
         {
@@ -99,13 +106,14 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        //metodo para agregar plato a un servicio
 
         public IActionResult AgregarPlato(int Id)
-        {
+        {//solo para rol cliente
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
-            {
+            { //obtenemos el servicio del que estamos hablando por id
                 Servicio ser = s.GetServicioPorId(Id);
-                List <Plato> lp = s.GetPlatos();
+                List <Plato> lp = s.GetPlatos(); //lista de platos para mostrar en el select
 
                 ViewBag.Servicio = ser;
                 ViewBag.Platos = lp;
@@ -116,7 +124,7 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        //cuando se no se agrega el plato se hacce un http post para mostrar el error
         [HttpPost]
         public IActionResult AgregarPlato(int id, int cantidad, int slcPlato)
         {
@@ -140,11 +148,16 @@ namespace ObligatorioP2MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        //ver los platos de un servicio
         public IActionResult VerPlatos(int Id)
         {
+            //solo para cliente
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
+                //get los platos por el id del servicio en cuestión
                 List<PlatoCantidad> misPlatos = s.GetPlatosCantidadPrServicio(Id);
+                //si no hay platos tirá error
                 if(misPlatos.Count().Equals(0))
                 {
                     ViewBag.msg = "No hay platos";
@@ -156,8 +169,10 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        //Cerrar un servicio abierto
         public IActionResult CerrarServicio(int id)
         {
+            //lama la función y vuelve a la vista que muestra los servicios
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
                 s.CerrarServicio(id);
@@ -171,6 +186,7 @@ namespace ObligatorioP2MVC.Controllers
 
         public IActionResult AltaLocal() // funcion para pedir un servicio de tipo Local.
         {
+            //pasa por mensaje los mozos para mostrar el select
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
                 List<Mozo> lm = s.GetMozos();
@@ -184,6 +200,7 @@ namespace ObligatorioP2MVC.Controllers
             }
 
         }
+        //cuando hay error se repostea la vista con el error
         [HttpPost]
         public IActionResult AltaLocal(int numeroMesa, int slcMozo, int cantidadComensales)
         {
@@ -206,11 +223,12 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        // lista con servicios más caros - cliente
         public IActionResult ServiciosMasCaros()
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
-
+                //obtiene la lista con los servicios y la pasa a la vista
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> servicios = s.GetServiciosMasCarosPorIdCliente(idLogueado);
                 if (servicios.Count().Equals(0))
@@ -225,13 +243,14 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        //Sericios filtrados por plato -- cliente 
         public IActionResult ServiciosPorPlato()
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Cliente")
             {
                 List<Plato> lp = s.GetPlatos();
                 List<Servicio> servicios = new List<Servicio>();
-
+                //pasa por viewbag platos para select de filtrpo
                 ViewBag.Platos = lp;
                 return View(servicios);
             }
@@ -241,7 +260,7 @@ namespace ObligatorioP2MVC.Controllers
             }
 
         }
-
+        //pasa la lista filtrada a la lista por post - tambien el viewbag de platos para el select
         [HttpPost]
         public IActionResult ServiciosPorPlato(string slcPlato)
         {
@@ -262,15 +281,15 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        //vista para ver que servicios atendio el mozo logueado
         public IActionResult ServiciosLocalesAtendioMozo()
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Mozo")
             {
-
+                //busca los servicios por id
                 int? idLogueado = HttpContext.Session.GetInt32("LogueadoId");
                 List<Servicio> misServicios = s.GetServiciosPorMozo(idLogueado);
-                if (misServicios.Count().Equals(0))
+                if (misServicios.Count().Equals(0)) //si la lista de servicios esta vacia manda un mensaje
                 {
                     ViewBag.msgMozo = "No hay servicios";
 
@@ -283,7 +302,7 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        // con los filtros del formulario envia la lista filtrada para mostrar en la vista - si hay error muestra mensjae
         [HttpPost]
         public IActionResult ServiciosLocalesAtendioMozo(DateTime f1, DateTime f2)
         {
@@ -314,6 +333,8 @@ namespace ObligatorioP2MVC.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        // vista repartidor - muestra los servicios ordenados por fecha
+        //si no hay servicios muestra mensaje de error
         public IActionResult ServiciosRepartidor()
         {
             if (HttpContext.Session.GetString("LogueadoRol") == "Repartidor")
