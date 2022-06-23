@@ -26,13 +26,13 @@ namespace ObligatorioP2MVC.Controllers
         {
             int? logueadoId = HttpContext.Session.GetInt32("LogueadoId");
             
-            if(logueadoId != null)
+            if(logueadoId != null) //si se inicio sesion como un usuario con rol...
             {
-                string rol = HttpContext.Session.GetString("LogueadoRol");
-                ViewBag.msg = $"Bienvenido/a, usted inició sesión como {rol}";
+                string rol = HttpContext.Session.GetString("LogueadoRol"); 
+                ViewBag.msg = $"Bienvenido/a, usted inició sesión como {rol}"; //se muestra el mensaje de bienvenido y su rol
             }
             else {
-                ViewBag.msg = "Inicie sesión";
+                ViewBag.msg = "Inicie sesión"; //de lo contrario se pide que inicie sesion
             }
             return View();
         }
@@ -54,21 +54,21 @@ namespace ObligatorioP2MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password) //
+        public IActionResult Login(string username, string password) 
         {
-            Persona login = s.ValidarDatosLogin(username, password);
+            Persona login = s.ValidarDatosLogin(username, password); //la persona  es traida de la validacion de datos de login
             string rol; 
             if(login != null)
             {
-                if(login is Cliente)
+                if(login is Cliente) //si el la persona que se loguea es cliente, entonces su rol es cliente
                 {
                     rol = "Cliente";
                 }
-                else if(login is Repartidor)
+                else if(login is Repartidor)//si el la persona que se loguea es repartidor, entonces su rol es repartidor
                 {
                     rol = "Repartidor";
                 }
-                else
+                else //igual razonamiento con mozo
                 {
                     rol = "Mozo";
                 }
@@ -84,7 +84,7 @@ namespace ObligatorioP2MVC.Controllers
                 return View();
             }
         }
-         public IActionResult Logout()
+         public IActionResult Logout() //si se desea cerrar sesion, se hace clear del rol y se redirige a index
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index");
