@@ -1,1 +1,1 @@
-# ENTREGA de Programación 2 de Analista rogramador , como trabajo final de asignatura
+# ENTREGA de Programación 2 de Analista Programador , como trabajo final de asignatura
